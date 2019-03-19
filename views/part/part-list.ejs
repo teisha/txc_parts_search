@@ -1,0 +1,47 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <main>
+                <% if (parts.length > 0) { %>
+                    <div class="container-fluid">
+                      <div class="row"> 
+                        <table > 
+                            <tr><th>Part Number</th>
+                                <th>Manufacturer</th>
+                                <th>Vendor</th>
+                                <th>Vendor Sku</th>
+                                <th>Quantity</th>
+                                <th>Cost</th>
+                                <th>Listed Price</th>
+                                <th>Weight</th>
+                                <th>MSRP</th>
+                                <th>Name</th>
+                                <th>Age</th>
+                            </tr>
+
+                        <% for (let part of parts) { %>
+                            <tr><td><%= part.part_number %></td>
+                                <td><%= part.manufacturer_name %></td>
+                                <td><%= part.vendor_name %></td>
+                                <td><%= part.vendor_sku %></td>
+                                <td><%= part.quantity %></td>
+                                <td><%= part.cost %></td>
+                                <td><%= part.listed_price %></td>
+                                <td><%= part.weight %></td>
+                                <td><%= part.msrp %></td>
+                                <td><%= part.part_name %></td>
+                                <td><%= part.date_loaded %></td>
+                            </tr>
+                        <% } %>
+                        </table>  
+                      </div>  
+                    </div>
+                    <% } else { %>
+                        <h1>No Parts Found!</h1>
+                        <% } %>
+            </main>
+            <%- include('../includes/end.ejs') %>
