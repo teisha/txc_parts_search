@@ -3,14 +3,49 @@
     </head>
 
     <body>
-        <%- include('../includes/navigation.ejs') %>
+      <%- include('../includes/navigation.ejs') %>
+      <div class="container-fluid px-0">  
+        <div class="col col-12">
+          <div class="row w3-theme-d1">
+
+            <div class="col col-6 mt-3">
+              <div class="row ml-1 mt-2 mr-0">  
+                <input type="hidden" name="offset" value="<%= offset %>">
+                <% if (offset > 0) { %>
+                  <div class="col col-2 px-0 w3-theme-l4">
+                    <a class="mx-1 text-dark" href="/list-parts-previous/?offset=<%= offset %>&limit=<%= limit %>"><strong><< Back</strong></a>
+                  </div>
+                <% } %>
+                <div class="col col-2 px-0 w3-theme-l4">
+                    <a class="mx-1 text-dark" href="/list-parts-next/?offset=<%= offset %>&limit=<%= limit %>"><strong>Next >></strong></a> 
+                </div>
+                <div class="col col-4 px-0 w3-theme-l4">
+                    <span class=" mx-1">Showing <strong><%= limit %></strong> records</span>
+                </div>
+              </div>  
+            </div>
+
+            <form class="col col-6  mt-3" action="/part-search" method="POST" >
+              <div class="input-group mb-3">  
+                <div class="input-group-prepend">
+                    <button class="btn w3-theme-d2 btn-outline-primary" type="submit">Search</button>
+                </div>
+                <input type="text" placeholder="Search" class="form-control"  name="searchParameter" id="search-box" aria-label="Search Parts Data" placeholder="<% if (searchValue) { %><%= searchValue %><% }  else  { %>Search<%}%>">
+              </div>  
+
+              <%= searchValue %>          
+            </form>
+          </div>
+        </div>
 
             <main>
                 <% if (parts.length > 0) { %>
                     <div class="container-fluid">
                       <div class="row"> 
-                        <table > 
-                            <tr><th>Part Number</th>
+                        <table  class="table table-striped"> 
+                          <thead>  
+                            <tr><th>Details</th>
+                                <th>Part Number</th>
                                 <th>Manufacturer</th>
                                 <th>Vendor</th>
                                 <th>Vendor Sku</th>
@@ -22,26 +57,31 @@
                                 <th>Name</th>
                                 <th>Age</th>
                             </tr>
-
-                        <% for (let part of parts) { %>
-                            <tr><td><%= part.part_number %></td>
-                                <td><%= part.manufacturer_name %></td>
-                                <td><%= part.vendor_name %></td>
-                                <td><%= part.vendor_sku %></td>
-                                <td><%= part.quantity %></td>
-                                <td><%= part.cost %></td>
-                                <td><%= part.listed_price %></td>
-                                <td><%= part.weight %></td>
-                                <td><%= part.msrp %></td>
-                                <td><%= part.part_name %></td>
-                                <td><%= part.date_loaded %></td>
-                            </tr>
-                        <% } %>
+                          </thead>
+ 
+                          <tbody>
+                            <% for (let part of parts) { %>
+                                <tr><td><a href="/part-detail/<%= part.parts_inventory_id %>"><img src="/images/compare.png" /></a></td>
+                                    <td><%= part.part_number %></td>
+                                    <td><%= part.manufacturer_name %></td>
+                                    <td><%= part.vendor_name %></td>
+                                    <td><%= part.vendor_sku %></td>
+                                    <td><%= part.quantity %></td>
+                                    <td><%= part.cost %></td>
+                                    <td><%= part.listed_price %></td>
+                                    <td><%= part.weight %></td>
+                                    <td><%= part.msrp %></td>
+                                    <td><%= part.part_name %></td>
+                                    <td><%= Math.trunc((new Date()-part.date_loaded)/(1000*60*60*24)) %> days</td>
+                                </tr>
+                            <% } %>
+                          </tbody>
                         </table>  
                       </div>  
                     </div>
                     <% } else { %>
                         <h1>No Parts Found!</h1>
-                        <% } %>
+                    <% } %>
             </main>
-            <%- include('../includes/end.ejs') %>
+      </div>      
+      <%- include('../includes/end.ejs') %>

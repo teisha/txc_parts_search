@@ -3,14 +3,16 @@
 
     <body>
         <%- include('../includes/navigation.ejs') %>
-        <main class="centered">
-            <h1><%= product.title %></h1>
-            <hr>
-            <div>
-                <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
-            </div>
-            <h2><%= product.price %></h2>
-            <p><%= product.description %></p>
-            <%- include('../includes/add-to-cart.ejs') %>
+        <main class="container">
+          <div  class="row">  
+            <h1><%= part.vendor_name %>: <%= part.vendor_sku %></h1>
+          </div>  
+          <hr>
+          <div class="row">
+            <h2><%= part.manufacturer_name %></h2>
+            <h2><%= part.part_name %></h2>
+            <p><%= part.part_description %></p>
+          </div> 
+          <a class="btn w3-theme-d1" href="/list-parts">Back To Search List</a>
         </main>
         <%- include('../includes/end.ejs') %>

@@ -18,9 +18,6 @@ app.use(favicon(path.join(__dirname,'public','images','favicon.ico')));
 app.use('/admin',adminRoutes);
 app.use(partsRoutes);
 
-
 app.use(errorController.get404);
 
-
-
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
