@@ -8,10 +8,10 @@ exports.getIndex = (req, res, next) => {
 exports.getParts = (req, res, next) => {
   const offset = 0;
   const limit = 20;
-  fetchAll(offset, limit, res);
+  fetchAll(offset, limit, req, res);
 };
 
-function fetchAll(offset, limit, res)  {
+function fetchAll(offset, limit, req, res)  {
    Part.fetchAll(limit, offset)
     .then(([rows, fieldData]) => {
       res.render('part/part-list', {
@@ -20,7 +20,8 @@ function fetchAll(offset, limit, res)  {
         limit: limit,
         searchValue: "",
         pageTitle: 'All Parts',
-        path: '/parts'
+        path: '/parts',
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err));
@@ -33,14 +34,14 @@ exports.getPreviousParts = (req, res, next) => {
     offset = 0;
   }
   console.log ("Getting " + req.query.offset + " to " + offset);
-  fetchAll(offset, limit, res);
+  fetchAll(offset, limit, req, res);
 }
 
 exports.getNextParts = (req, res, next) => {
   const limit = parseInt(req.query.limit);
   const offset = parseInt(req.query.offset) + limit;
   console.log ("Getting " + req.query.offset + " to " + offset);
-  fetchAll(offset, limit, res);
+  fetchAll(offset, limit, req, res);
 }
 
 exports.getPart = (req, res, next) => {
@@ -50,7 +51,8 @@ exports.getPart = (req, res, next) => {
       res.render('part/part-detail', {
         part: part[0],
         pageTitle: part.vendor_sku,
-        path: '/parts'
+        path: '/parts',
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err));
@@ -70,7 +72,8 @@ exports.searchParts = (req, res, next) => {
         limit: limit,
         searchValue: searchValue,
         pageTitle: 'Parts Matching: "' + searchValue +'"',
-        path: '/parts'
+        path: '/parts',
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err));

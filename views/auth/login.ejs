@@ -1,0 +1,30 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/application.css">
+</head>
+
+<body>
+   <%- include('../includes/navigation.ejs') %>
+
+    <main >
+        <div class="card shadow col-sm-12 col-md-8 mx-auto p-0 my-5">
+            <div class="card-header text-center w3-theme-d2 py-4">
+                <h2>Login</h2>
+            </div>
+            <div class="card-body">
+
+                <form class="login-form" action="/login" method="POST">
+                    <div class="form-control">
+                        <label for="email">E-Mail</label>
+                        <input type="email" name="email" id="email">
+                    </div>
+                    <div class="form-control">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password">
+                    </div>
+                    <button class="btn btn-txctech submitBtn float-right mt-5 col-xs-12" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </main>
+<%- include('../includes/end.ejs') %>

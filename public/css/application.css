@@ -1,0 +1,62 @@
+
+.container-fluid {
+    padding: 0px 0px 0px 0px;
+}
+
+#header-img {
+    max-width: 100%;
+    height: auto;
+}
+
+.btn-txctech {
+    border-radius: 3rem;
+    display:inline-block;
+    color: #fff;
+    background: #ff7200 !important;
+    border: solid;
+    border-color: #1a0b00;
+    border-width: thin;
+    width: 30%;
+    font-size:medium;
+}
+
+.btn-txctech:hover {
+  color:#000!important;
+  background-color:#ccc!important;
+  border-color: #000000;
+  box-shadow:0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)
+}
+
+.btn-txctech:focus, .btn-txctech.focus {
+  box-shadow: 0 0 0 0.2rem rgb(255, 129, 26);
+}
+
+.btn-txctech.disabled, .btn-txctech:disabled {
+  color: #fff;
+  background-color: #ffe3cc;
+  border-color: #ffe3cc;
+}
+
+.btn-txctech:not(:disabled):not(.disabled):active, .btn-txctech:not(:disabled):not(.disabled).active,
+.show > .btn-txctech.dropdown-toggle {
+  color: #fff;
+  background-color: #ff7200 !important;
+  border-color: #ffe3cc;
+}
+
+.btn-txctech:not(:disabled):not(.disabled):active:focus, .btn-txctech:not(:disabled):not(.disabled).active:focus,
+.show > .btn-txctech.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgb(255, 129, 26);
+}
+
+
+.shadow {
+  box-shadow:0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)
+}
+
+.table thead tr th {
+    padding: 10px;
+    font-weight: normal;
+    font-size: 18px;
+    background-color: #ff7200 !important;
+}
