@@ -16,5 +16,5 @@ try {
 
 } catch (e) {
 	debug(1, "error while trying to create account:", e)
-    res.status(500).end("Internal Server Error")
+    // res.status(500).end("Internal Server Error")
 }

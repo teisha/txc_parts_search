@@ -20,14 +20,21 @@
   },
   "homepage": "https://github.com/teisha/txc_parts_search#readme",
   "dependencies": {
+    "bcrypt": "^3.0.5",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.3.1",
+    "connect-flash": "^0.1.1",
+    "csurf": "^1.9.0",
+    "debug": "^4.1.1",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-handlebars": "^3.0.2",
     "express-mysql-session": "^2.1.0",
     "express-session": "^1.15.6",
+    "jquery": "^3.3.1",
     "mysql2": "^1.6.5",
+    "popper.js": "^1.14.7",
     "pug": "^2.0.3",
     "serve-favicon": "^2.5.0"
   }

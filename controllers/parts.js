@@ -21,7 +21,6 @@ function fetchAll(offset, limit, req, res)  {
         searchValue: "",
         pageTitle: 'All Parts',
         path: '/parts',
-        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err));
@@ -52,7 +51,6 @@ exports.getPart = (req, res, next) => {
         part: part[0],
         pageTitle: part.vendor_sku,
         path: '/parts',
-        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err));
@@ -62,9 +60,10 @@ exports.getPart = (req, res, next) => {
 exports.searchParts = (req, res, next) => {
   const offset = 0;
   const limit = 20;
+  const searchType = req.body.searchType;
   const searchValue = req.body.searchParameter;
   console.log("Running query for search parameter: " + searchValue)
-  Part.findMatching(limit, offset, searchValue)
+  Part.findMatching(limit, offset, searchValue, searchType)
     .then(([rows, fieldData]) => {
       res.render('part/part-list', {
         parts: rows,
@@ -73,7 +72,6 @@ exports.searchParts = (req, res, next) => {
         searchValue: searchValue,
         pageTitle: 'Parts Matching: "' + searchValue +'"',
         path: '/parts',
-        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err));

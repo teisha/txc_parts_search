@@ -73,6 +73,7 @@
 /*    background-color: #ff7200;  */
     background-color: #1a0b00; 
     color: #ffffff;
+    border-width: 0;
 }
 
 /* change the color of active or hovered links */
@@ -84,4 +85,10 @@
 .navbar-custom .nav-link:hover  {
     color: #ffffff;
     background-color: #ff7200 ;
+}
+
+.label {
+  color: #000000;
+  font-weight: bold;
+  font-size: 1.05em;
 }

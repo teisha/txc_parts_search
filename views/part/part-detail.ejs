@@ -1,18 +1,70 @@
 <%- include('../includes/head.ejs') %>
     </head>
-
     <body>
+        <%- include('../includes/functions.ejs') %>
         <%- include('../includes/navigation.ejs') %>
-        <main class="container">
-          <div  class="row">  
-            <h1><%= part.vendor_name %>: <%= part.vendor_sku %></h1>
-          </div>  
-          <hr>
-          <div class="row">
-            <h2><%= part.manufacturer_name %></h2>
-            <h2><%= part.part_name %></h2>
-            <p><%= part.part_description %></p>
-          </div> 
-          <a class="btn w3-theme-d1" href="/list-parts">Back To Search List</a>
+        <main>
+            <div class="col col-12">
+                <div class="row w3-theme-d1">
+                    <a class="btn w3-theme-d1 my-2" href="/list-parts"> << Back To Search List</a>
+                </div>
+            </div>                    
+            <div class="card shadow col-sm-12 col-md-10 mx-auto p-0 my-5">
+                <div class="card-header text-center w3-theme-d2 py-4">
+                    <h4><span class="label">Vendor:</span> <%= part.vendor_name %></h4>
+                    <h4><span class="label">Vendor SKU:</span> <%= part.vendor_sku %></h4>
+                </div>
+
+                <div  class="card-body">
+                    <div class="row">
+                        <span class="col-12 col-md-3 text-left label">Part Number:</span>
+                        <span class="col-12 col-md-9"><%= part.part_number %>&nbsp;
+                            <% if (part.products_model && part.part_number !== part.products_model) { %>
+                            (<%= part.products_model %>)
+                            <% } %>
+                        </span>
+                    </div>
+
+                    <hr>
+                    <div class="row">
+                        <span class="col-12 col-md-3 text-left label">Manufacturer:</span>
+                        <span class="col-12 col-md-9 text-left"><%= part.manufacturer_name %></span>
+                    </div>
+                    <div class="row">
+                        <span class="col-12 col-md-3 text-left label">Part Name:</span>
+                        <span class="col-12 col-md-9 text-left"><%= part.part_name %></span>
+                    </div>
+                    <div class="row">
+                        <span class="col-12 col-md-3 text-left label">Description:</span>
+                        <span class="col-12 col-md-9 text-left"><%= part.part_description %></span>
+                    </div> 
+
+                    <div class="row">
+                        <span class="col-12 col-md-3 text-left label">Quantity:</span>
+                        <span class="col-12 col-md-3 text-left"><%= part.quantity %></span>
+                        <span class="col-12 col-md-3 text-left label">Etilize ID:</span>
+                        <span class="col-12 col-md-3 text-left"><%= part.etilize_id %></span>
+                    </div>
+                    <div class="row">
+                        <span class="col-12 col-md-3 text-left label">Weight:</span>
+                        <span class="col-12 col-md-3 text-left"><%= part.weight %></span>
+                        <span class="col-12 col-md-3 text-left label">Price:</span>
+                        <span class="col-12 col-md-3 text-left"><%= formatDollar(part.listed_price) %></span>
+                    </div> 
+                    <div class="row">
+                        <span class="col-12 col-md-3 text-left label">Cost:</span>
+                        <span class="col-12 col-md-3 text-left"><%= formatDollar(part.cost) %></span>
+                        <span class="col-12 col-md-3 text-left label">MSRP:</span>
+                        <span class="col-12 col-md-3 text-left"><%= formatDollar(part.msrp)  %></span>
+                    </div> 
+
+                    <div class="row">
+                        <span class="col-12 col-md-3 text-left label">Last Date Loaded:</span>
+                        <span class="col-12 col-md-9 text-left"><%=  part.date_loaded.toDateString() %></span>
+                    </div> 
+                </div>
+            </div>
         </main>
         <%- include('../includes/end.ejs') %>
+
+        

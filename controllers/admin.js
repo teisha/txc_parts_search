@@ -8,7 +8,6 @@ exports.selectParams = (req, res, next) => {
         params: rows,
         pageTitle: 'Loader Params',
         path: '/admin/parameters',
-        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err));

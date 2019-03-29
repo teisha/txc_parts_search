@@ -4,6 +4,10 @@ const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
+const csrf = require('csurf');
+const flash = require('connect-flash');
+
+
 var options = {
     host: 'localhost',
     port: 3306,
@@ -17,6 +21,7 @@ const errorController = require('./controllers/error');
 const adminRoutes = require('./routes/admin');
 const partsRoutes = require('./routes/parts');
 const authRoutes = require('./routes/auth');
+const csrfProtection = csrf();
 
 const app = express();
 app.set('view engine','ejs');
@@ -33,6 +38,16 @@ app.use(session({
     saveUninitialized: false
 }));
 
+app.use(csrfProtection);
+app.use(flash());
+
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.user = req.session.user;
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
+
 app.use('/admin',adminRoutes);
 app.use(partsRoutes);
 app.use(authRoutes);
@@ -48,7 +63,8 @@ app.use((req, res, next ) => {
     	req.user = new User (user.user_id, 
     		user.username, 
     		user.first_name, 
-    		user.last_name, 
+    		user.last_name,
+    		user.email, 
     		user.phone_number, 
     		user.phone_extension
     		);

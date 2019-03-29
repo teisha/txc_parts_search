@@ -28,11 +28,17 @@
             <form class="col col-6  mt-3" action="/part-search" method="POST" >
               <div class="input-group mb-3">  
                 <div class="input-group-prepend">
-                    <button class="btn w3-theme-d2 btn-outline-primary" type="submit">Search</button>
+                    <button class="btn w3-theme-d2 btn-outline-primary" type="submit"><span class="mx-2">Search</span></button>
                 </div>
-                <input type="text" placeholder="Search" class="form-control"  name="searchParameter" id="search-box" aria-label="Search Parts Data" placeholder="<% if (searchValue) { %><%= searchValue %><% }  else  { %>Search<%}%>">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <input type="text" placeholder="Search" class="form-control"  name="searchParameter" id="search-box" aria-label="Search Parts Data" <% if (searchValue) { %>value="<%= searchValue %>"<% }  else  { %>placeholder="Search"<%}%>>
+                <select class="w3-theme-d2" id="searchType" name="searchType">
+                    <option value="1" selected>Part Starts With</option>
+                    <option value="2">Exact Part</option>
+                    <option value="3">Part Keyword</option>
+                </select>
               </div>  
-
+<% if (searchValue) { %> Search is populated  <%  } %>
               <%= searchValue %>          
             </form>
           </div>

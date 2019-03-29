@@ -1,12 +1,12 @@
 const path = require('path');
-
 const express = require('express');
 
 const adminController = require('../controllers/admin');
+const validateLogin = require('../middleware/validateAuthentication');
 
 const router = express.Router();
 
-router.get('/parameters', adminController.selectParams);
+router.get('/parameters', validateLogin, adminController.selectParams);
 
 //router.get('/show-loader-params', adminController.showLoaderParams);
 
