@@ -29,18 +29,18 @@
         <% } %>  
         <ul class="navbar-nav mt-lg-0 justify-content-end">
             <% if (!isAuthenticated && path !== '/login' ) { %>
-                <li class="nav-item">
+                <li class="nav-item ml-auto">
                     <a class="nav-link text-uppercase px-3 py-3 w-100" href="/login">Login</a>
                 </li>
             <% } else  if (isAuthenticated) { %>
-                <li class="nav-item">
+                <li class="nav-item ml-auto">
                     <form action="/logout" method="post">  
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <button class="nav-link text-uppercase px-3 py-4 w-100" type="submit">Logout</button>
                     </form>
                 </li>
             <% } else { %>
-                <li  class="nav-item px-3 py-3">&nbsp</li>
+                <li  class="nav-item ml-auto px-3 py-3">&nbsp</li>
             <% } %>
         </ul>
     </nav>

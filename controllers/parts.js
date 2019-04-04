@@ -59,9 +59,12 @@ exports.getPart = (req, res, next) => {
 
 exports.searchParts = (req, res, next) => {
   const offset = 0;
-  const limit = 20;
+  const limit = 50;
   const searchType = req.body.searchType;
   const searchValue = req.body.searchParameter;
+  if (!searchValue || searchValue === '') {
+    return res.redirect('/list-parts');
+  }
   console.log("Running query for search parameter: " + searchValue)
   Part.findMatching(limit, offset, searchValue, searchType)
     .then(([rows, fieldData]) => {

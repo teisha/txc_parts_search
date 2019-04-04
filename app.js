@@ -35,7 +35,8 @@ app.use(session({
     secret: '<session_cookie_secret>',
     store: sessionStore,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    maxAge: 86400000
 }));
 
 app.use(csrfProtection);

@@ -4,7 +4,7 @@
   "description": "Parts Search application to view loaded parts and set values that drive the loader",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --watch --verbose=false",
     "start": "node NODE_ENV=production app.js",
     "start-server": "node app.js",
     "start:dev": "nodemon NODE_ENV=development app.js"
@@ -37,5 +37,8 @@
     "popper.js": "^1.14.7",
     "pug": "^2.0.3",
     "serve-favicon": "^2.5.0"
+  },
+  "devDependencies": {
+    "jest": "^24.5.0"
   }
 }

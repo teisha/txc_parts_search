@@ -9,18 +9,21 @@
           <div class="row w3-theme-d1">
 
             <div class="col col-6 mt-3">
-              <div class="row ml-1 mt-2 mr-0">  
-                <input type="hidden" name="offset" value="<%= offset %>">
+              <div class="row ml-1 mt-0 mr-0">  
+<%if (!searchValue) { %>
+                
                 <% if (offset > 0) { %>
-                  <div class="col col-2 px-0 w3-theme-l4">
+                  <div class="col col-2 px-0 w3-theme-l5">
                     <a class="mx-1 text-dark" href="/list-parts-previous/?offset=<%= offset %>&limit=<%= limit %>"><strong><< Back</strong></a>
                   </div>
                 <% } %>
-                <div class="col col-2 px-0 w3-theme-l4">
+                <div class="col col-2 px-0 w3-theme-l5">
                     <a class="mx-1 text-dark" href="/list-parts-next/?offset=<%= offset %>&limit=<%= limit %>"><strong>Next >></strong></a> 
                 </div>
-                <div class="col col-4 px-0 w3-theme-l4">
-                    <span class=" mx-1">Showing <strong><%= limit %></strong> records</span>
+<% } %>                
+                <div class="col col-4 px-0 w3-theme-l5">
+                    <span class="row mx-1">Showing records: </span>
+                    <span class="row mx-1"><strong><%= offset %> to <%= offset + limit %></strong> </span>
                 </div>
               </div>  
             </div>
@@ -31,15 +34,13 @@
                     <button class="btn w3-theme-d2 btn-outline-primary" type="submit"><span class="mx-2">Search</span></button>
                 </div>
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <input type="text" placeholder="Search" class="form-control"  name="searchParameter" id="search-box" aria-label="Search Parts Data" <% if (searchValue) { %>value="<%= searchValue %>"<% }  else  { %>placeholder="Search"<%}%>>
+                <input type="text" placeholder="Search" class="form-control"  name="searchParameter" id="search-box" aria-label="Search Parts Data" value="<%= searchValue %>" placeholder="Search">
                 <select class="w3-theme-d2" id="searchType" name="searchType">
                     <option value="1" selected>Part Starts With</option>
                     <option value="2">Exact Part</option>
                     <option value="3">Part Keyword</option>
                 </select>
-              </div>  
-<% if (searchValue) { %> Search is populated  <%  } %>
-              <%= searchValue %>          
+              </div>            
             </form>
           </div>
         </div>

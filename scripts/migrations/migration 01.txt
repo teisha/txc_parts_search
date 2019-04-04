@@ -2,28 +2,17 @@
 
 npm install --save express-session
 npm install --save express-mysql-session
+npm install --save bcrypt
+npm install --save csurf 
 
 
 
-CREATE TABLE IF NOT EXISTS users (
-    user_id              int   NOT NULL auto_increment,
-    username             varchar(64)    NOT NULL,
-    user_password        varchar(255)   NOT NULL,    
-    first_name           varchar(255)   NOT NULL,
-    last_name            varchar(255)   NOT NULL,
-    phone_number         varchar(15)    NULL,
-    phone_extension      varchar(7)     NULL,
-    CONSTRAINT pk_users PRIMARY KEY (
-      user_id
-	),
-	CONSTRAINT uk_users UNIQUE (
-      username
-    )
-)
-TABLESPACE = tbs_vendor
-ENGINE = InnoDB;
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON users TO app_admin_role;
-
+users
+user_login_activity
+sessions
 
 <Insert... >
+
+
+
+===== COMPLETED 03/29/2019 ================

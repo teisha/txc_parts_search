@@ -11,6 +11,16 @@ module.exports = class User {
     this.phoneExtension = phoneExtension;
   }
 
+  setPassword(pwd) {
+    this.password = pwd;
+  }
+
+
+  saveLoginHistory(sessionId) {
+    const sqlString = ' INSERT INTO user_login_activity (user_id, username, ' +
+         ' session_id ) VALUES (?, ?, ?) ';
+    return db.execute(sqlString,[this.id, this.userName, sessionId]);
+  }
 
   static findById(id) {
     return db.execute('SELECT * FROM users WHERE user_id = ?', [parseInt(id)]);

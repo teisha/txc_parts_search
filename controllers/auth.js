@@ -3,59 +3,77 @@ const bcrypt = require('bcryptjs');
 
 exports.getLogin = (req, res, next) => {
 	let errorMessage = req.flash('error');
-	res.render ('auth/login', {
+	res.status(200).render ('auth/login', {
          path: '/login',
          pageTitle: "Login",
          errorMessage: getSingleErrorMessage(errorMessage)
 	});
 };
 
-exports.postLogin = (req, res, next) => {
+exports.postLogin = async (req, res, next) => {
 	const username = req.body.username;
 	const password = req.body.password;	
-	if (!username || !password) {
+	if (!username || username === undefined || 
+		!password || password === undefined) {
 		req.flash('error', 'Please enter username and password to log in.');
-		return res.redirect('/login');
+		return res.status(422).redirect('/login');
 	}
-bcrypt.hash(password, 12).then (pwd => console.log(pwd));	
 
-	User.findByUserName(username)
-	  .then( ([rows, fieldData]) => {
-	  	let userData = rows[0];
-console.log("Found User: " + userData.user_id + ", " + userData.username + ", " + userData.user_password);	  	
-	  	if (!userData || userData.username === undefined) {
-	  		req.flash('error', 'Invalid email or password.');
-	  		return res.redirect('/login');
-	  	}
-	  	bcrypt
-	  		.compare(password, userData.user_password)
-	  		.then( isMatch => {
-	  			if (isMatch) {
-	  				let user = new User (userData.user_id, 
-			    		userData.username, 
-			    		userData.first_name, 
-			    		userData.last_name,
-			    		userData.email, 
-			    		userData.phone_number, 
-			    		userData.phone_extension
-		    		);
-		    		console.log("User IS LOGGED IN: " + JSON.stringify(user));
-					req.session.isLoggedIn = true;
-					req.session.user = user;
-					return req.session.save(err => {
-						if (err) console.log(err);
-						res.redirect('/index');
-					});
-	  			}
-	  			req.flash('error','Invalid email or password');
-	  			return res.redirect('/login');
-	  		} )
-	  		.catch (err => {
-	  			console.log(err);
-	  			res.redirect('/login');
-	  		});
-	  })
-	  .catch(err => console.log(err) );
+//await bcrypt.hash(password, 12).then (pwd => console.log(pwd));
+
+	try {		
+		const [rows, fieldData] = await User.findByUserName(username);
+		let userData = rows[0];
+// console.log("Found User: " + userData.user_id + ", " + userData.username );		
+
+		if (!userData || userData.username === undefined) {
+  			req.flash('error', 'Invalid email or password.');
+  			return res.status(422).redirect('/login');
+  		}
+
+		try {
+			let isMatch = await bcrypt.compare(password, userData.user_password);
+// console.log("Do passwords match? :" + isMatch);	  			
+			if (isMatch) {
+// console.log ("PASSWORDS MATCH");
+		  		let user = new User(userData.user_id, 
+	    			userData.username, 
+	    			userData.first_name, 
+	    			userData.last_name,
+	    			userData.email, 
+	    			userData.phone_number, 
+	    			userData.phone_extension
+				);
+				req.session.isLoggedIn = true;
+				req.session.user = user;
+					
+// console.log ("STARTING SESSION: " + req.sessionID);					
+				return  req.session.save(err => {
+					if (err) console.log("ERROR SAVING SESSION" + err);
+// console.log ("SAVING SESSION: " + req.sessionID);						
+					req.session.user.saveLoginHistory(req.sessionID);
+					res.status(200).redirect('/index');
+				});
+			}
+		} catch (err) {
+	  		console.log("BCRYPT ERROR ON COMPARE: " + err);
+	  		res.status(422).redirect('/login');
+		}
+
+
+	} catch (err1) {
+		console.log("ERROR looking up user: " + username + ': ' + err1);
+		req.flash('error', 'Could not log in user.  Please try again later.');
+		return res.status(500).redirect('/login');
+	}
+	
+	req.flash('error','Invalid email or password');
+	return res.status(422).redirect('/login');
+	  		
+
+//	  })
+//	  .
+	return;  
 };
 
 exports.postLogout = (req, res, next) => {

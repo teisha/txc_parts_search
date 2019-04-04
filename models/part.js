@@ -26,6 +26,7 @@ module.exports = class Part {
 
 
   static fetchAll(limit, offset) {
+    console.log("Find All: " + offset + " to " + (offset + limit));
     return db.execute('SELECT  pi.manufacturer_id, pi.vendor_id, parts_inventory_id, products_model, part_number, '+ 
         ' vendor_sku, quantity, cost, weight, part_name, part_description, condition_indicator, ' + 
         ' msrp, listed_price, etilize_id, date_loaded, vendor_short_name, vendor_name, ' + 
