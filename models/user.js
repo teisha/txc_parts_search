@@ -33,4 +33,7 @@ module.exports = class User {
       return db.execute('SELECT * FROM users WHERE username = ?',[name.trim()]);
   }
 
+  static fetchAllUsers(name) {
+      return db.execute('SELECT * FROM users');
+  }
 };

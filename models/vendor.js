@@ -9,6 +9,12 @@ module.exports = class Vendor {
   }
 
 
+  static fetchAllVendors(id) {
+    return db.execute('SELECT * FROM vendor_import_params vip '+ 
+           ' INNER JOIN vendors v ON vip.vendor_id = v.vendor_id '+ 
+           ' ORDER BY v.vendor_id ' );
+  }
+
   static findById(id) {
     return db.execute('SELECT * FROM vendors WHERE vendor_id = ?', [id]);
   }

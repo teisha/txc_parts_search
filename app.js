@@ -20,6 +20,7 @@ var sessionStore = new MySQLStore(options);
 const errorController = require('./controllers/error');
 const adminRoutes = require('./routes/admin');
 const partsRoutes = require('./routes/parts');
+const vendorRoutes = require('./routes/vendors');
 const authRoutes = require('./routes/auth');
 const csrfProtection = csrf();
 
@@ -32,11 +33,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname,'public','images','favicon.ico')));
 app.use(session({
     key: 'txc_inventory_cookie',
-    secret: '<session_cookie_secret>',
+    secret: process.env.SESSION_SECRET,
     store: sessionStore,
     resave: false,
     saveUninitialized: false,
-    maxAge: 86400000
+    cookie: {
+    	maxAge: 86400000
+    }
 }));
 
 app.use(csrfProtection);
@@ -50,6 +53,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/admin',adminRoutes);
+app.use('/vendor',vendorRoutes);
 app.use(partsRoutes);
 app.use(authRoutes);
 

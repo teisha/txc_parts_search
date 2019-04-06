@@ -4,7 +4,7 @@
 
     <body>
       <%- include('../includes/navigation.ejs') %>
-      <div class="container-fluid px-0">  
+      <main class="container-fluid px-0">  
         <div class="col col-12">
           <div class="row w3-theme-d1">
 
@@ -34,7 +34,7 @@
                     <button class="btn w3-theme-d2 btn-outline-primary" type="submit"><span class="mx-2">Search</span></button>
                 </div>
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <input type="text" placeholder="Search" class="form-control"  name="searchParameter" id="search-box" aria-label="Search Parts Data" value="<%= searchValue %>" placeholder="Search">
+                <input type="text" class="form-control"  name="searchParameter" id="search-box" aria-label="Search Parts Data" value="<%= searchValue %>" placeholder="Search">
                 <select class="w3-theme-d2" id="searchType" name="searchType">
                     <option value="1" selected>Part Starts With</option>
                     <option value="2">Exact Part</option>
@@ -45,50 +45,50 @@
           </div>
         </div>
 
-            <main>
-                <% if (parts.length > 0) { %>
-                    <div class="container-fluid">
-                      <div class="row"> 
-                        <table  class="table table-striped"> 
-                          <thead>  
-                            <tr><th>Details</th>
-                                <th>Part Number</th>
-                                <th>Manufacturer</th>
-                                <th>Vendor</th>
-                                <th>Vendor Sku</th>
-                                <th>Quantity</th>
-                                <th>Cost</th>
-                                <th>Listed Price</th>
-                                <th>Weight</th>
-                                <th>MSRP</th>
-                                <th>Name</th>
-                                <th>Age</th>
-                            </tr>
-                          </thead>
- 
-                          <tbody>
-                            <% for (let part of parts) { %>
-                                <tr><td><a href="/part-detail/<%= part.parts_inventory_id %>"><img src="/images/compare.png" /></a></td>
-                                    <td><%= part.part_number %></td>
-                                    <td><%= part.manufacturer_name %></td>
-                                    <td><%= part.vendor_name %></td>
-                                    <td><%= part.vendor_sku %></td>
-                                    <td><%= part.quantity %></td>
-                                    <td><%= part.cost %></td>
-                                    <td><%= part.listed_price %></td>
-                                    <td><%= part.weight %></td>
-                                    <td><%= part.msrp %></td>
-                                    <td><%= part.part_name %></td>
-                                    <td><%= Math.trunc((new Date()-part.date_loaded)/(1000*60*60*24)) %> days</td>
-                                </tr>
-                            <% } %>
-                          </tbody>
-                        </table>  
-                      </div>  
-                    </div>
-                    <% } else { %>
-                        <h1>No Parts Found!</h1>
+
+        <% if (parts.length > 0) { %>
+            <div class="col col-12">
+              <div class="row"> 
+                <table  class="table table-striped"> 
+                  <thead>  
+                    <tr><th>Details</th>
+                        <th>Part Number</th>
+                        <th>Manufacturer</th>
+                        <th>Vendor</th>
+                        <th>Vendor Sku</th>
+                        <th>Quantity</th>
+                        <th>Cost</th>
+                        <th>Listed Price</th>
+                        <th>Weight</th>
+                        <th>MSRP</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <% for (let part of parts) { %>
+                        <tr><td><a href="/part-detail/<%= part.parts_inventory_id %>"><img src="/images/compare.png" /></a></td>
+                            <td><%= part.part_number %></td>
+                            <td><%= part.manufacturer_name %></td>
+                            <td><%= part.vendor_name %></td>
+                            <td><%= part.vendor_sku %></td>
+                            <td><%= part.quantity %></td>
+                            <td><%= part.cost %></td>
+                            <td><%= part.listed_price %></td>
+                            <td><%= part.weight %></td>
+                            <td><%= part.msrp %></td>
+                            <td><%= part.part_name %></td>
+                            <td><%= Math.trunc((new Date()-part.date_loaded)/(1000*60*60*24)) %> days</td>
+                        </tr>
                     <% } %>
-            </main>
-      </div>      
+                  </tbody>
+                </table>  
+              </div>  
+            </div>
+            <% } else { %>
+                <h1>No Parts Found!</h1>
+            <% } %>
+      </main>
+   
       <%- include('../includes/end.ejs') %>

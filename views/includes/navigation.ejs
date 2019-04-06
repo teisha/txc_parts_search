@@ -20,10 +20,22 @@
                 <li class="nav-item ">
                     <a class="nav-link text-uppercase px-3 py-4 w-100 <%= path === '/parts' ? 'active' : '' %>" href="/index">Parts</a>
                 </li>
-
-                <li class="nav-item">
-                        <a class="nav-link  text-uppercase px-3 py-4 w-100  <%= path === '/admin/parameters' ? 'active' : '' %>" href="/admin/parameters">Admin
-                        </a>
+                 <li class="nav-item">
+                      <a class="nav-link text-uppercase px-3 py-4 w-100 <%= path === '/vendors' ? 'active' : '' %>"  href="/vendor/vendors">Vendors</a>
+                </li>
+<!--              <li class="list-group-item">View Vendor Download Parameters</li>
+                  <li class="list-group-item">View Vendor API Parameters</li>
+                  <li class="list-group-item">View Vendor Processing Errors</li>
+                  <li class="list-group-item">Vendor Contacts</li>
+-->                  
+                <li class="nav-item dropdown">
+                    <a class="nav-link  dropdown-toggle text-uppercase px-3 py-4 w-100  <%= path === '/admin/parameters' ? 'active' : '' %>" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin
+                    </a>
+                        <div class="dropdown-menu my-0" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item px-3 py-4 w-100" href="/admin/show-loader-params">Loader Configuration</a>
+                            <a class="dropdown-item px-3 py-4 w-100" href="/admin/web-users">PartsSearch Web Application Admin</a>
+                            <a class="dropdown-item px-3 py-4 w-100" href="/admin/requests">Issues / Requests</a>
+                        </div>
                 </li>
             </ul>
         <% } %>  

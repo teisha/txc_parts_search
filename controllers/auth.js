@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const userService = require('../services/userService');
 const bcrypt = require('bcryptjs');
 
 exports.getLogin = (req, res, next) => {
@@ -22,10 +23,9 @@ exports.postLogin = async (req, res, next) => {
 //await bcrypt.hash(password, 12).then (pwd => console.log(pwd));
 
 	try {		
-		const [rows, fieldData] = await User.findByUserName(username);
+		const [rows, fieldData] = await userService.findByUserName(username);
 		let userData = rows[0];
 // console.log("Found User: " + userData.user_id + ", " + userData.username );		
-
 		if (!userData || userData.username === undefined) {
   			req.flash('error', 'Invalid email or password.');
   			return res.status(422).redirect('/login');
@@ -33,9 +33,7 @@ exports.postLogin = async (req, res, next) => {
 
 		try {
 			let isMatch = await bcrypt.compare(password, userData.user_password);
-// console.log("Do passwords match? :" + isMatch);	  			
 			if (isMatch) {
-// console.log ("PASSWORDS MATCH");
 		  		let user = new User(userData.user_id, 
 	    			userData.username, 
 	    			userData.first_name, 
@@ -47,10 +45,8 @@ exports.postLogin = async (req, res, next) => {
 				req.session.isLoggedIn = true;
 				req.session.user = user;
 					
-// console.log ("STARTING SESSION: " + req.sessionID);					
 				return  req.session.save(err => {
 					if (err) console.log("ERROR SAVING SESSION" + err);
-// console.log ("SAVING SESSION: " + req.sessionID);						
 					req.session.user.saveLoginHistory(req.sessionID);
 					res.status(200).redirect('/index');
 				});

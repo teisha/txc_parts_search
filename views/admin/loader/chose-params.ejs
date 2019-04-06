@@ -1,0 +1,23 @@
+<%- include('../../includes/head.ejs') %>
+    </head>
+
+    <body>
+        <%- include('../../includes/navigation.ejs') %>
+
+            <main>
+                <% if (errorMessage) { %>
+                    <div class="alert alert-danger"><%= errorMessage %></div>
+                <% } %>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item text-uppercase text-dark px-3 py-4 w-100">
+                      <a class="text-dark"  href="/admin/generic-loader-parameters">View Generic Loader Parameters</a>
+                  </li>
+                  <li class="list-group-item text-uppercase text-dark px-3 py-4 w-100">
+                      <a class="text-dark"  href="/admin/markup-loader-parameters">View Pricing Markup Values</a>
+                  </li>
+                  <li class="list-group-item text-uppercase text-dark px-3 py-4 w-100">
+                      <a class="text-dark"  href="/admin/loader-history">View Processing History</a>
+                  </li>
+                </ul>
+            </main>
+            <%- include('../../includes/end.ejs') %>

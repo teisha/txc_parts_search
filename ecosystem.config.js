@@ -13,19 +13,21 @@ module.exports = {
     max_memory_restart: '1G',
     env: {
       NODE_ENV: 'development',
-	  PORT: '8082',
-	  MYSQL_HOST:'localhost',
-	  MYSQL_USER:'txc_app_user',
-	  MYSQL_PASSWORD:'viewtxc8554957',
-	  MYSQL_SCHEMA:'txc_inventory'
+  	  PORT: '8082',
+  	  MYSQL_HOST:'localhost',
+  	  MYSQL_USER:'txc_app_user',
+  	  MYSQL_PASSWORD:'viewtxc8554957',
+  	  MYSQL_SCHEMA:'txc_inventory',
+      SESSION_SECRET: ':f>9w?73Bu^DK5O*On_?SFX^mUSz?2'
     },
     env_production: {
       NODE_ENV: 'production',
-	  PORT: '8082',
-	  MYSQL_HOST:'localhost',
-	  MYSQL_USER:'txc_app_user',
-	  MYSQL_PASSWORD:'viewtxc8554957',
-	  MYSQL_SCHEMA:'txc_inventory'
+  	  PORT: '8082',
+  	  MYSQL_HOST:'localhost',
+  	  MYSQL_USER:'txc_app_user',
+  	  MYSQL_PASSWORD:'viewtxc8554957',
+  	  MYSQL_SCHEMA:'txc_inventory',
+      SESSION_SECRET: ':f>9w?73Bu^DK5O*On_?SFX^mUSz?2'
     }
   }],
 
