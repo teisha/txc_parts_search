@@ -1,3 +1,4 @@
+'use strict';
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -6,6 +7,15 @@ const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const csrf = require('csurf');
 const flash = require('connect-flash');
+const helmet = require('helmet');
+
+const debug = require('debug')('http')
+  , http = require('http')
+  , name = 'TXC PartsSearch';
+
+
+const breadcrumbs = require('./util/breadcrumbs');
+
 
 
 var options = {
@@ -28,6 +38,7 @@ const app = express();
 app.set('view engine','ejs');
 app.set('views','views');
 
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname,'public','images','favicon.ico')));
@@ -42,13 +53,26 @@ app.use(session({
     }
 }));
 
+// app.use((req, res, next) => {
+//   console.log('---------' + req.path + '---------');
+//   console.log('DEBUG HEADERS: ' + JSON.stringify(req.headers) );
+//   console.log('DEBUG PARAMS: ' + JSON.stringify(req.params) );
+//   console.log('DEBUG QUERY: ' + JSON.stringify(req.query) );
+//   console.log('DEBUG BODY: ' + JSON.stringify(req.body) );
+//   next()
+// })
+
+
 app.use(csrfProtection);
+//  app.use(helmet());                   need to install ssl keys
 app.use(flash());
 
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;
   res.locals.user = req.session.user;
   res.locals.csrfToken = req.csrfToken();
+  breadcrumbs.collect(req);
+  res.locals.breadcrumbs = req.session.breadcrumbs
   next();
 });
 
@@ -58,23 +82,5 @@ app.use(partsRoutes);
 app.use(authRoutes);
 
 app.use(errorController.get404);
-
-app.use((req, res, next ) => {
-  if (!req.session.user) {
-  	return next();
-  }
-  User.findById(req.session.user._id)
-    .then(user => {
-    	req.user = new User (user.user_id, 
-    		user.username, 
-    		user.first_name, 
-    		user.last_name,
-    		user.email, 
-    		user.phone_number, 
-    		user.phone_extension
-    		);
-    	next();
-    })
-});
 
 app.listen(process.env.PORT || 3000);

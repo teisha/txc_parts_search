@@ -1,0 +1,1 @@
+"use strict";const db=require("../util/database");module.exports=class{constructor(s,t,e,i){this.id=s,this.vendorShortName=t,this.VendorName=e,this.isChannelOnline=i}};

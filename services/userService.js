@@ -1,3 +1,4 @@
+'use strict';
 const db = require('../util/database');
 module.exports = class UserService {
 	static findById(id) {

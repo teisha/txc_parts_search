@@ -1,2 +1,6 @@
+dist
+tmp
+deploy
 node_modules
 nodemon.json
+ecosystem.config.js

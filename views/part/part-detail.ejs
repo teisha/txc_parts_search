@@ -4,11 +4,7 @@
         <%- include('../includes/functions.ejs') %>
         <%- include('../includes/navigation.ejs') %>
         <main>
-            <div class="col col-12">
-                <div class="row w3-theme-d1">
-                    <a class="btn w3-theme-d1 my-2" href="/list-parts"> << Back To Search List</a>
-                </div>
-            </div>                    
+            <%- include('../includes/backParts.ejs')%>                 
             <div class="card shadow col-sm-12 col-md-10 mx-auto p-0 my-5">
                 <div class="card-header text-center w3-theme-d2 py-4">
                     <h4><span class="label">Vendor:</span> <%= part.vendor_name %></h4>

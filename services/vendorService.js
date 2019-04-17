@@ -1,7 +1,8 @@
+'use strict';
 const db = require('../util/database');
 module.exports = class VendorService {
 
-  static fetchAllVendors(id) {
+  static fetchAllVendors() {
     return db.execute('SELECT vip.*, '+
     	   ' v.vendor_short_name, v.vendor_name, ' +
     	   ' IF(is_load_activated = 1,1,0 ) as is_active_toint, ' +

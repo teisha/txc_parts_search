@@ -1,0 +1,47 @@
+<%- include('../../includes/head.ejs') %>
+    </head>
+
+    <body>
+        <%- include('../../includes/navigation.ejs') %>
+        <%- include('../../includes/functions.ejs') %>
+            <main>
+                <div class="col col-12 px-0">
+                    <div class="row w3-theme-d1">
+                        <a class="btn w3-theme-d1 my-2" href="show-loader-params"> << Back To Admin Menu</a>
+                    </div>
+                    <h4 class="text-center w3-theme-d1 pb-3 mb-0">Loader History</h4>
+                </div>  
+                <% if (params.loaderSummary.length > 0) { %>
+                    <div class="container-fluid px-0">
+                        <table class="table"> 
+                          <thead>
+                            <tr><th class="pl-3 font-weight-bold">Parameter ID</th>
+                                <th class="font-weight-bold">Process<br>Start Date</th>
+                                <th class="font-weight-bold">Process<br>End Date</th>
+                                <th class="font-weight-bold">Load Status</th>
+                                <th class="font-weight-bold">Last Action</th>
+                            </tr>
+                          </thead>
+
+                        <% for (let param of params.loaderSummary) { %>
+                            <tr><td class="pl-5"><%= param.log_id %></td>
+                                <td><span><%= formatDate(param.process_start_date) %></span>
+                                    <span><%= formatTime(param.process_start_date) %></span>
+                                </td>
+                                <td>
+                                    <% if (param.process_end_date) { %>
+                                        <span><%= formatDate(param.process_end_date) %></span>
+                                        <span><%= formatTime(param.process_end_date) %></span>
+                                    <% } %>
+                                </td>
+                                <td><%= param.log_status %></td>
+                                <td><%= param.log_action %></td>
+                            </tr>
+                        <% } %>
+                        </table>
+                    </div>
+                <% } else { %>
+                    <h1>No Process History Found!</h1>
+                <% } %>
+            </main>
+            <%- include('../../includes/end.ejs') %>

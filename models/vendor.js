@@ -1,3 +1,4 @@
+'use strict';
 const db = require('../util/database');
 
 module.exports = class Vendor {
@@ -8,14 +9,4 @@ module.exports = class Vendor {
     this.isChannelOnline = isChannelOnline;
   }
 
-
-  static fetchAllVendors(id) {
-    return db.execute('SELECT * FROM vendor_import_params vip '+ 
-           ' INNER JOIN vendors v ON vip.vendor_id = v.vendor_id '+ 
-           ' ORDER BY v.vendor_id ' );
-  }
-
-  static findById(id) {
-    return db.execute('SELECT * FROM vendors WHERE vendor_id = ?', [id]);
-  }
 };

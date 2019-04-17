@@ -1,0 +1,45 @@
+<%- include('../../includes/head.ejs') %>
+    </head>
+
+    <body>
+        <%- include('../../includes/navigation.ejs') %>
+            <main>
+                <div class="col col-12 px-0">
+                    <div class="row w3-theme-d1">
+                        <a class="btn w3-theme-d1 my-2" href="show-loader-params"> << Back To Admin Menu</a>
+                    </div>
+                    <h4 class="text-center w3-theme-d1 pb-3 mb-0">Application Users</h4>
+                </div>  
+                <% if (params.length > 0) { %>
+                    <div class="container-fluid px-0">
+                        <table class="table"> 
+                          <thead>
+                            <tr><th class="pl-3 font-weight-bold">User ID</th>
+                                <th class="font-weight-bold">Username</th>
+                                <th class="font-weight-bold">First Name</th>
+                                <th class="font-weight-bold">Last Name</th>
+                                <th class="font-weight-bold">Email</th>
+                                <th class="font-weight-bold">Phone Number</th>
+                            </tr>
+                          </thead>
+
+                        <% for (let param of params) { %>
+                            <tr><td><%= param.user_id %></td>
+                                <td><%= param.username %></td>
+                                <td><%= param.first_name %></td>
+                                <td><%= param.last_name %></td>
+                                <td><%= param.email %></td>
+                                <td><%= param.phone_number %>
+                                    <% if (param.phone_extension) { %>
+                                    &nbsp;(<%= param.phone_extension %>)
+                                    <% } %>
+                                </td>
+                            </tr>
+                        <% } %>
+                        </table>
+                    </div>
+                <% } else { %>
+                    <h1>No Users Found!</h1>
+                <% } %>
+            </main>
+            <%- include('../../includes/end.ejs') %>

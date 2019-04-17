@@ -1,8 +1,9 @@
+'use strict';
 const Params = require('../services/loaderParameterService');
 const History = require('../services/historyService');
 const UserService = require('../services/userService');
 const RequestService = require('../services/requestService');
-
+const { getSingleErrorMessage } = require('../util/common.js');
 
 exports.viewGenericLoaderParams = (req, res, next) => {
   Params.fetchAllGenericProcessingParameters()
@@ -92,14 +93,34 @@ exports.postRequest = async(req, res, next) => {
 	}
 }
 
-exports.showLoaderParams = (req, res, next) => {
+exports.showLoaderParams = async (req, res, next) => {
 	let errorMessage = req.flash('error');
-    res.render('admin/loader/chose-params', {
-        params: {},
-        pageTitle: 'Loader Params',
-        path: '/admin/parameters',
-        errorMessage: getSingleErrorMessage(errorMessage)
-    });
+
+  let recordCounts = {}
+  try {
+    const [tableData, fieldData] = await History.getRecordSummary();
+    recordCounts = tableData;
+  } catch (err) {
+    console.log(err);
+  }
+  let loadSummary = {};
+  try {
+    let [tableData, metaData] = await History.getLastLoadSummary();
+    loadSummary = tableData
+  } catch (err) {
+    console.log(err);
+    
+  }
+  res.render('admin/loader/chose-params', {
+      params: { 
+          recordCounts: recordCounts,
+          loadSummary: loadSummary
+      },
+      pageTitle: 'Loader Params',
+      path: '/admin/parameters',
+      errorMessage: getSingleErrorMessage(errorMessage)
+  });
+
 };
 
 

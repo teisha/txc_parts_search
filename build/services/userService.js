@@ -1,0 +1,1 @@
+"use strict";const db=require("../util/database");module.exports=class{static findById(e){return db.execute("SELECT * FROM users WHERE user_id = ?",[parseInt(e)])}static findByUserName(e){return db.execute("SELECT * FROM users WHERE username = ?",[e.trim()])}static fetchAllUsers(e){return db.execute("SELECT * FROM users")}};

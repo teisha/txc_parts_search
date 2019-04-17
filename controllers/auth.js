@@ -1,6 +1,8 @@
+'use strict';
 const User = require('../models/user');
 const userService = require('../services/userService');
 const bcrypt = require('bcryptjs');
+const { getSingleErrorMessage } = require('../util/common.js');
 
 exports.getLogin = (req, res, next) => {
 	let errorMessage = req.flash('error');
@@ -72,6 +74,7 @@ exports.postLogin = async (req, res, next) => {
 	return;  
 };
 
+
 exports.postLogout = (req, res, next) => {
   req.session.destroy(err => {
     console.log(err);
@@ -80,14 +83,7 @@ exports.postLogout = (req, res, next) => {
 };
 
 
-getSingleErrorMessage = function(message) {
-	if (message.length > 0) {
-    	message = message[0];
-  	} else {
-    	message = null;
-  	}
-  	return message;
-}
+
 
 
 

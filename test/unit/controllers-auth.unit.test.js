@@ -6,7 +6,7 @@ jest.mock('mysql2', function() {});
 
 const User = require('../../models/user');
 const fakeDb = [
-      {user_id:1, username:'testuser', first_name:'Maark', last_name:'Component', 
+    {user_id:1, username:'testuser', first_name:'Maark', last_name:'Component', 
 	  email:'component@co.com', phone_number:'5551234567',phone_extension:'',
 	  user_password:'$2a$12$juObFQM63J0yTfeidegoduhNKC2QozbG6MGYgzp8.muSnoDLtxLsW'},
 	  {user_id:1, username:'secondtestuser', first_name:'Stewey', last_name:'Element', 

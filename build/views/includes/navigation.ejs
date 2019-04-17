@@ -1,0 +1,60 @@
+
+<header class="container-fluid w3-theme-l1 mt-lg-0 mx-0 px-0">
+    <div class="row mx-0">
+        <div class="site-title col-12 col-md-10 mx-0 mx-sm-auto">
+
+            <a class="h-100" href="http://txctech.com"> <img class="rounded ml-2 mt-4"  src="/images/logonew.png" alt="TXC Parts Search"/></a>
+        </div>
+        <div class="site-title col-12 col-md-2 text-right pt-3 pr-1">
+            <% if (isAuthenticated) { %>
+                <span class="label">Welcome, <%= user.firstName %>!</span>
+            <% } %>
+        </div>
+        
+
+    </div>
+
+    <nav class="navbar navbar-expand-sm navbar-custom justify-content-between w-100 py-0 pr-3">
+        <% if (isAuthenticated) { %> 
+            <ul class="navbar-nav mt-lg-0 ml-3 py-0">
+                <li class="nav-item ">
+                    <a class="nav-link text-uppercase px-3 py-4 w-100 <%= path === '/parts' ? 'active' : '' %>" href="/index">Parts</a>
+                </li>
+                 <li class="nav-item">
+                      <a class="nav-link text-uppercase px-3 py-4 w-100 <%= path === '/vendors' ? 'active' : '' %>"  href="/vendor/vendors">Vendors</a>
+                </li>
+<!--              <li class="list-group-item">View Vendor Download Parameters</li>
+                  <li class="list-group-item">View Vendor API Parameters</li>
+                  <li class="list-group-item">View Vendor Processing Errors</li>
+                  <li class="list-group-item">Vendor Contacts</li>
+-->                  
+                <li class="nav-item dropdown">
+                    <a class="nav-link  dropdown-toggle text-uppercase px-3 py-4 w-100  <%= path === '/admin/parameters' ? 'active' : '' %>" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin
+                    </a>
+                        <div class="dropdown-menu my-0" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item px-3 py-4 w-100" href="/admin/show-loader-params">Loader Configuration</a>
+                            <a class="dropdown-item px-3 py-4 w-100" href="/admin/web-users">PartsSearch Web Application Admin</a>
+                            <a class="dropdown-item px-3 py-4 w-100" href="/admin/requests">Issues / Requests</a>
+                        </div>
+                </li>
+            </ul>
+        <% } %>  
+        <ul class="navbar-nav mt-lg-0 justify-content-end">
+            <% if (!isAuthenticated && path !== '/login' ) { %>
+                <li class="nav-item ml-auto">
+                    <a class="nav-link text-uppercase px-3 py-3 w-100" href="/login">Login</a>
+                </li>
+            <% } else  if (isAuthenticated) { %>
+                <li class="nav-item ml-auto">
+                    <form action="/logout" method="post">  
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <button class="nav-link text-uppercase px-3 py-4 w-100" type="submit">Logout</button>
+                    </form>
+                </li>
+            <% } else { %>
+                <li  class="nav-item ml-auto px-3 py-3">&nbsp</li>
+            <% } %>
+        </ul>
+    </nav>
+</header>
+

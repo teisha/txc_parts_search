@@ -3,6 +3,10 @@
         return '$' + parseFloat(dollarField).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
     }
 
+    formatCount = function(intField) {
+        return parseFloat(intField).toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    }
+
     formatTime = function(date) {
   		let hours = date.getHours();
   		let minutes = date.getMinutes();
@@ -15,5 +19,15 @@
 	formatDate = function(date) {
 		return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() ;
 	}
+
+  formatDuration = function(duration) {
+    if (duration < 1 ) {
+      return '< 1 Minute';
+    } else if (duration === 1) { 
+      return duration + ' Minute';
+    } else {
+      return duration + ' Minutes';
+    }
+  }
 
 %>

@@ -1,3 +1,4 @@
+'use strict';
 const backdrop = document.querySelector('.backdrop');
 const sideDrawer = document.querySelector('.mobile-nav');
 const menuToggle = document.querySelector('#side-menu-toggle');
@@ -14,13 +15,3 @@ function menuToggleClickHandler() {
 
 backdrop.addEventListener('click', backdropClickHandler);
 menuToggle.addEventListener('click', menuToggleClickHandler);
-
-
-getSingleErrorMessage = function(message) {
-	if (message.length > 0) {
-    	message = message[0];
-  	} else {
-    	message = null;
-  	}
-  	return message;
-}

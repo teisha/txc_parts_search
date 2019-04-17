@@ -3,21 +3,90 @@
 
     <body>
         <%- include('../../includes/navigation.ejs') %>
+        <%- include('../../includes/functions.ejs') %>
 
             <main>
                 <% if (errorMessage) { %>
                     <div class="alert alert-danger"><%= errorMessage %></div>
                 <% } %>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item text-uppercase text-dark px-3 py-4 w-100">
-                      <a class="text-dark"  href="/admin/generic-loader-parameters">View Generic Loader Parameters</a>
-                  </li>
-                  <li class="list-group-item text-uppercase text-dark px-3 py-4 w-100">
-                      <a class="text-dark"  href="/admin/markup-loader-parameters">View Pricing Markup Values</a>
-                  </li>
-                  <li class="list-group-item text-uppercase text-dark px-3 py-4 w-100">
-                      <a class="text-dark"  href="/admin/loader-history">View Processing History</a>
-                  </li>
-                </ul>
+                <div class="row mx-0 h-100">
+                  <div class="col-2 w3-theme-d1">
+                    <nav class="navbar-custom">
+                      <ul class="navbar-nav">
+                        <li class="nav-item w3-theme-d1 px-1 py-4 w-100">
+                            <a class="w3-theme-d1" href="/admin/generic-loader-parameters">View Generic Loader Parameters</a>
+                        </li>
+                        <li class="nav-item w3-theme-d1 px-1 py-4 w-100">
+                            <a class="w3-theme-d1" href="/admin/markup-loader-parameters">View Pricing Markup Values</a>
+                        </li>
+                        <li class="nav-item w3-theme-d1 px-1 py-4 w-100">
+                            <a class="w3-theme-d1" href="/admin/loader-history">View Processing History</a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+
+
+                  <div class="col-10 px-0">
+                    <% if (params.recordCounts.length > 0) { %>
+                        <div class="container-fluid px-0">
+                            <table class="table">
+                              <h3 class="text-center text-dark w3-theme-d1 my-0">Parts Inventory Record Counts</h3> 
+                              <thead>
+                                <tr><th class="pl-4 font-weight-bold">Vendor ID</th>
+                                    <th class="font-weight-bold">Vendor Name</th>
+                                    <th class="font-weight-bold">Last Load Date</th>
+                                    <th class="font-weight-bold">Record Count</th>
+                                    <th class="font-weight-bold">Record Count (Non-Zero Quantity)</th>
+                                </tr>
+                              </thead>
+
+                            <% for (let param of params.recordCounts) { %>
+                                <tr><td class="pl-5"><%= param.vendor_id %></td>
+                                    <td><%= param.vendor_name %></td>
+                                    <td class="text-right"><%= formatDate(param.last_load_date) %></td>
+                                    <td class="text-right"><%= formatCount(param.record_count) %></td>
+                                    <td class="text-right"><%= formatCount(param.nonzero_qty_count) %></td>
+                                </tr>
+                            <% } %>
+                            </table>
+                        </div>
+                    <% } else { %>
+                        <h1>No Load Counts Found!</h1>
+                    <% } %>
+
+
+                    <% if (params.loadSummary.length > 0) { %>
+                        <div class="container-fluid px-0">
+                            <table class="table"> 
+                              <h3 class="text-center text-dark w3-theme-d1 my-0">Last Load Summary</h3>
+                              <thead>                             
+                                <tr><th class="pl-4 font-weight-bold">Log ID</th>
+                                    <th class="font-weight-bold">Vendor Name</th>
+                                    <th class="font-weight-bold">Duration</th>
+                                    <th class="font-weight-bold">Load Status</th>
+                                    <th class="font-weight-bold">Record Count</th>
+                                    <th class="font-weight-bold">Message</th>
+                                </tr>
+                              </thead>
+
+                            <% for (let summaryRec of params.loadSummary) { %>
+                                <tr><td class="pl-5"><%= summaryRec.log_id %></td>
+                                    <td><%= summaryRec.vendor_name %></td>
+                                    <td><%= formatDuration(summaryRec.duration) %></td>
+                                    <td><%= summaryRec.load_status %></td>
+                                    <td class="text-right"><%= formatCount(summaryRec.record_count) %></td>
+                                    <td><%= summaryRec.message %></td>
+                                </tr>
+                            <% } %>
+                            </table>
+                        </div>
+                    <% } else { %>
+                        <h1>No Load Summary Found!</h1>
+                    <% } %>
+
+                  </div>
+
+                </div>
             </main>
             <%- include('../../includes/end.ejs') %>

@@ -1,0 +1,1 @@
+exports.get404=((e,t,s)=>{t.status(404).render("404",{pageTitle:"Page Not Found",path:"/404",isAuthenticated:e.session.isLoggedIn})});

@@ -1,3 +1,4 @@
+'use strict';
 const Vendor = require('../services/vendorService');
 
 exports.viewVendors = (req, res, next) => {

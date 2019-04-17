@@ -1,10 +1,11 @@
+'use strict';
 module.exports = {
   apps : [{
     name: 'TXC PARTS SEARCH',
     script: 'app.js',
-	output: './logs/out.log',
+    output: './logs/out.log',
     error: './logs/error.log',
-	log: './logs/combined.outerr.log',
+    log: './logs/combined.outerr.log',
 
     // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
     instances: 1,
@@ -18,7 +19,7 @@ module.exports = {
   	  MYSQL_USER:'txc_app_user',
   	  MYSQL_PASSWORD:'viewtxc8554957',
   	  MYSQL_SCHEMA:'txc_inventory',
-      SESSION_SECRET: ':f>9w?73Bu^DK5O*On_?SFX^mUSz?2'
+      SESSION_SECRET: 'i47hCKYwG5'
     },
     env_production: {
       NODE_ENV: 'production',
@@ -32,7 +33,8 @@ module.exports = {
   }],
 
   // deploy : {
-  //   production : {
+  //   production : {   .
+    // ssh properties go here
   //     user : 'node',
   //     host : '212.83.163.1',
   //     ref  : 'origin/master',

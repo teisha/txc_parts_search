@@ -1,0 +1,114 @@
+        <div class="col-12 px-0">
+          <div class="row w3-theme-d1 mx-0">
+
+            <div class="col-12 col-md-5 mt-3 px-0">
+              <div class="row ml-1 mt-0 mr-0">  
+
+
+                    <% if (offset > 0) { %>
+                      <div class="col-12 col-md-3 px-0 w3-theme-l5">
+                        <form  action="/list-parts-previous" method="POST" >
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <input type="hidden" name="searchType" value="<%=searchType%>" />
+                            <input type="hidden" name="searchValue" value="<%= searchValue%>" />
+                            <input type="hidden" name="offset" value="<%= offset%>" />
+                            <input type="hidden" name="limit" value="<%= limit%>" />
+                            <input type="hidden" name="searchManufacturer" value="<%= searchManufacturer%>" />
+                            <input type="hidden" name="vendorSelected" value="<%= vendorSelected%>" />
+                            <button class="col-12 mx-0 w3-theme-l5 text-dark" type="submit"><strong>Back<br> <<</strong></button>
+                        </form>
+                      </div>
+                    <% } %>
+                    <%if (parts.length > 0) { %>
+                      <div class="col-12 col-md-3 px-0 w3-theme-l5">
+                        <form  action="/list-parts-next" method="POST" >
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <input type="hidden" name="searchType" value="<%=searchType%>" />
+                            <input type="hidden" name="searchValue" value="<%= searchValue%>" />
+                            <input type="hidden" name="offset" value="<%= offset%>" />
+                            <input type="hidden" name="limit" value="<%= limit%>" />
+                            <input type="hidden" name="searchManufacturer" value="<%= searchManufacturer%>" />
+                            <input type="hidden" name="vendorSelected" value="<%= vendorSelected%>" />
+                            <button class="col-12 mx-0 w3-theme-l5 text-dark" type="submit"><strong>Next<br> >></strong></button>
+                        </form>
+                      </div>
+                    <% } %>
+        
+                <div class="col-12 col-md-5 px-0 w3-theme-l5 ">
+                    <span class="row px-1 mx-0 text-right">Showing records: </span>
+                    <span class="row px-1 mx-0 text-right"><strong><%= offset %> to <%= offset + limit %></strong> </span>
+                </div>
+
+                <% if (errorMessage) { %>
+                    <div class="col-9 mt-1 alert alert-danger"><%= errorMessage %></div>
+                <% } %>
+              </div>  
+            </div>
+
+            <form class="col-12 col-md-7 mt-3  px-0" action="/part-search" method="POST" >
+                <div class="row mx-0">
+                  <div class="input-group mb-1">  
+                    <div class="col-12 col-md-2 px-0 input-group-prepend">
+                        <button class="col-12 btn px-0 w3-theme-d2 btn-outline-primary" type="submit"><span class="mx-2">Search</span></button>
+                    </div>
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="text" class="col-12 col-md-7 form-control"  name="searchParameter" id="search-box" aria-label="Search Parts Data" value="<%= searchValue %>" placeholder="Search">
+                    <select class="col-12 col-md-3 py-1 px-0 w3-theme-d2" id="searchType" name="searchType" value="<%= searchType %>">
+                        <option value="1" <%if (searchType === "1") {%>selected<%}%>  >Part Starts With</option>
+                        <option value="2" <%if (searchType === "2") {%>selected<%}%>  >Exact Part</option>
+                        <option value="3" <%if (searchType === "3") {%>selected<%}%>  >Part Keyword</option>
+                    </select>
+                  </div>  
+                </div>  
+
+                <div class="row mx-0">
+                    <a class="nav-item text-dark" data-toggle="collapse" data-target="#advancedsearch" role="button" aria-expanded="false" aria-controls="collapseDownloadData">Advanced Search >></a>
+                </div>
+                <div class="row mx-0 <% if (!vendorSelected && !searchManufacturer ) { %>collapse<% }%>"
+                                        
+                 id="advancedsearch">
+                    <div class="row  mx-0"  >
+                      <div class="input-group">  
+                        <label class="col-12 col-md-5 text-dark" for="searchVendor">Select Vendor</label>
+                        <select class="col-12 col-md-7 px-0 py-1 mb-1 w3-theme-d2 text-dark " id="searchVendor" name="vendorSelected" value="<%= vendorSelected %>">
+                            <option value="" <%if (vendorSelected === "") {%>
+                                 selected
+                                 <%}%>
+                            >  <span class="text-secondary"> < Select > </span>
+                            </option>
+                            <%
+                              allVendors.forEach((value, key) => {
+                            %>
+                               <option value="<%=key %>" 
+                                 <%if (key == vendorSelected) {%>
+                                 selected
+                                 <%}%>
+                                >
+                                   <%=value %>
+                               </option>
+                            <%
+                              })
+                            
+                            %>
+                        </select>
+                      </div>
+                      <div class="input-group mb-1">  
+
+                       <label class="col-12 col-md-5 text-dark" for="manufacturerName">Search Manufacturers</label>
+                       <input type="text" class="col-12  col-md-7 form-control"  name="searchManufacturer" id="manufacturerName" aria-label="Manufacturer Name" value="<%= searchManufacturer %>" placeholder="Manufacturer">
+                    </div>
+                </div>
+
+
+            </form>
+
+
+
+          </div>
+        </div>
+
+
+
+
+
+           

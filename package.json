@@ -4,10 +4,12 @@
   "description": "Parts Search application to view loaded parts and set values that drive the loader",
   "main": "server.js",
   "scripts": {
-    "test": "jest --watch --verbose=false",
+    "test": "jest --verbose=false",     
     "start": "node NODE_ENV=production app.js",
+    "build": "gulp deployProd",
     "start-server": "node app.js",
-    "start:dev": "nodemon NODE_ENV=development app.js"
+    "build:dev": "gulp deployDev",
+    "start:dev": "nodemon DEBUG=express:* NODE_ENV=development app.js"
   },
   "repository": {
     "type": "git",
@@ -32,13 +34,28 @@
     "express-handlebars": "^3.0.2",
     "express-mysql-session": "^2.1.0",
     "express-session": "^1.15.6",
+    "helmet": "^3.16.0",
     "jquery": "^3.3.1",
     "mysql2": "^1.6.5",
     "popper.js": "^1.14.7",
     "pug": "^2.0.3",
+    "request": "^2.88.0",
     "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "child_process": "^1.0.2",
+    "del": "^4.1.0",
+    "gulp": "^4.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-cssnano": "^2.1.3",
+    "gulp-imagemin": "^5.0.3",
+    "gulp-newer": "^1.4.0",
+    "gulp-nodemon": "^2.4.2",
+    "gulp-terser": "^1.1.7",
+    "gulp-uglify": "^3.0.2",
+    "gulp-webserver": "^0.9.1",
+    "gulp-zip": "^4.2.0",
     "jest": "^24.5.0"
   }
 }

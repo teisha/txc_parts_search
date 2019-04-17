@@ -1,0 +1,43 @@
+<%- include('../../includes/head.ejs') %>
+    </head>
+
+    <body>
+        <%- include('../../includes/navigation.ejs') %>
+        <%- include('../../includes/functions.ejs') %>
+
+            <main>
+                <% if (params.length > 0) { %>
+                    <div class="container-fluid px-0">
+                        <div class="col col-12 px-0">
+                            <div class="row w3-theme-d1">
+                                <a class="btn w3-theme-d1 my-2" href="show-loader-params"> << Back To Admin Menu</a>
+                            </div>
+                        </div>                      
+                        <div class="card shadow col-sm-12 col-md-8 mx-auto p-0 my-5">
+                            <div class="card-header text-center w3-theme-d2">
+                                <h4><span class="label"> Cost Markup Calculations Used During Load</h4>
+                            </div>
+                            <div class="card card-body px-0 py-0">
+                                <% for (let param of params) { %>
+                                    <div class="row border-bottom">
+                                        <span class="col-12 col-md-2 py-2 text-center label">Cost Range:</span>
+                                        <span class="col-12 col-md-4 py-2 text-left">
+                                          <% if (param.upper_limit_price == -1) { %>  
+                                            Above <%= formatDollar(param.begin_range) %> 
+                                          <% } else { %>
+                                            From <%= formatDollar(param.begin_range) %> 
+                                            To <%= formatDollar(param.upper_limit_price) %>
+                                          <% } %>  
+                                        </span>
+                                        <span class="col-12 col-md-2 py-2 text-center label">Multiplier:</span>
+                                        <span class="col-12 col-md-4 py-2 text-left"><%= param.multiplier %></span>
+                                    </div>
+                                <% } %>
+                            </div>                        
+                        </div>
+                    </div>
+                <% } else { %>
+                    <h1>No Markup Parameters Found!</h1>
+                <% } %>
+            </main>
+            <%- include('../../includes/end.ejs') %>

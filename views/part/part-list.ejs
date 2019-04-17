@@ -1,55 +1,18 @@
 <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/product.css">
     </head>
-
     <body>
       <%- include('../includes/navigation.ejs') %>
       <main class="container-fluid px-0">  
-        <div class="col col-12">
-          <div class="row w3-theme-d1">
 
-            <div class="col col-6 mt-3">
-              <div class="row ml-1 mt-0 mr-0">  
-<%if (!searchValue) { %>
-                
-                <% if (offset > 0) { %>
-                  <div class="col col-2 px-0 w3-theme-l5">
-                    <a class="mx-1 text-dark" href="/list-parts-previous/?offset=<%= offset %>&limit=<%= limit %>"><strong><< Back</strong></a>
-                  </div>
-                <% } %>
-                <div class="col col-2 px-0 w3-theme-l5">
-                    <a class="mx-1 text-dark" href="/list-parts-next/?offset=<%= offset %>&limit=<%= limit %>"><strong>Next >></strong></a> 
-                </div>
-<% } %>                
-                <div class="col col-4 px-0 w3-theme-l5">
-                    <span class="row mx-1">Showing records: </span>
-                    <span class="row mx-1"><strong><%= offset %> to <%= offset + limit %></strong> </span>
-                </div>
-              </div>  
-            </div>
 
-            <form class="col col-6  mt-3" action="/part-search" method="POST" >
-              <div class="input-group mb-3">  
-                <div class="input-group-prepend">
-                    <button class="btn w3-theme-d2 btn-outline-primary" type="submit"><span class="mx-2">Search</span></button>
-                </div>
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <input type="text" class="form-control"  name="searchParameter" id="search-box" aria-label="Search Parts Data" value="<%= searchValue %>" placeholder="Search">
-                <select class="w3-theme-d2" id="searchType" name="searchType">
-                    <option value="1" selected>Part Starts With</option>
-                    <option value="2">Exact Part</option>
-                    <option value="3">Part Keyword</option>
-                </select>
-              </div>            
-            </form>
-          </div>
-        </div>
+                <%- include('./part-search-menu')%>
+
 
 
         <% if (parts.length > 0) { %>
-            <div class="col col-12">
-              <div class="row"> 
-                <table  class="table table-striped"> 
+            <div class="col col-12 px-0">
+              <div class="row mx-0"> 
+                <table  class="table col-12 table-striped"> 
                   <thead>  
                     <tr><th>Details</th>
                         <th>Part Number</th>
@@ -86,8 +49,10 @@
                 </table>  
               </div>  
             </div>
+            <% } else if (offset > 0) { %>
+                <h1 class="my-5 text-center text-primary font-weight-bold">No More Parts In List</h1>
             <% } else { %>
-                <h1>No Parts Found!</h1>
+                <h1 class="my-5 text-center text-danger font-weight-bold">No Parts Found!</h1>
             <% } %>
       </main>
    
