@@ -33,7 +33,7 @@ exports.getParts = (req, res, next) => {
 
 
 exports.searchParts = (req, res, next) => {
-  console.log('controller.searchParts-body: ' + JSON.stringify(req.body));
+  // console.log('controller.searchParts-body: ' + JSON.stringify(req.body));
   const offset = 0;
   const limit = 50;
   const searchType = req.body.searchType;
@@ -56,19 +56,19 @@ exports.getPreviousParts = (req, res, next) => {
   const searchValue = req.body.searchValue;
   const vendorSelected = req.body.vendorSelected;
   const searchManufacturer = req.body.searchManufacturer;
-  console.log ("BODY-PREVIOUS searchType: " + searchType + " searchValue: " + searchValue);
+  // console.log ("BODY-PREVIOUS searchType: " + searchType + " searchValue: " + searchValue);
   scroll(limit, offset, searchType, searchValue, vendorSelected, searchManufacturer, req, res);
 }
 
 exports.getNextParts = (req, res, next) => {
-  console.log("NEXT PARTS - REQUEST BODY: " + JSON.stringify(req.body));
+  // console.log("NEXT PARTS - REQUEST BODY: " + JSON.stringify(req.body));
   const limit = parseInt(req.body.limit);
   const offset = parseInt(req.body.offset) + limit;
   const searchType = req.body.searchType;
   const searchValue = req.body.searchValue;
   const vendorSelected = req.body.vendorSelected;
   const searchManufacturer = req.body.searchManufacturer;
-  console.log ("BODY-NEXT searchType: " + searchType + " searchValue: " + searchValue);
+  // console.log ("BODY-NEXT searchType: " + searchType + " searchValue: " + searchValue);
   scroll(limit, offset, searchType, searchValue, vendorSelected, searchManufacturer, req, res);
 }
 
@@ -158,7 +158,7 @@ exports.goBack = async (req, res, next) => {
   }
 
   const postParams = breadcrumb.body;
-  // console.log("GO BACK TO: " + JSON.stringify(breadcrumb) );
+   console.log("GO BACK TO: " + JSON.stringify(breadcrumb) );
   // Object.keys(postParams).forEach((keyname) => {
   //    console.log(keyname + ':' + breadcrumb.body[keyname]);
   // });
@@ -172,12 +172,14 @@ exports.goBack = async (req, res, next) => {
   requestHeaders['content-length'] = Buffer.byteLength(JSON.stringify(postParams));
   requestHeaders['csrf-token'] = postParams._csrf;
 
-  console.log("HEADERS: " + JSON.stringify(requestHeaders) );
+  //console.log("HEADERS: " + JSON.stringify(requestHeaders) );
   await request.post({ headers: req.headers, url: fullUrl, 
                json: true, body: postParams },
                function(error, response, body) {
+                  if (error) {
                     console.error('ERROR redirecting back to parts list:', error);
-                    console.log('statusCode:', response && response.statusCode);
-                    return res.send(body);
+                  }
+                  console.log('statusCode:', response && response.statusCode);
+                  return res.send(body);
   }); 
 }

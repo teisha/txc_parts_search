@@ -64,7 +64,7 @@ module.exports = class PartService {
       }
                                     
       sqlString.push(' ORDER BY pi.vendor_id, vendor_sku LIMIT ? OFFSET ?');
-      console.log( sqlString);
+//      console.log( sqlString);
     return db.execute (sqlString.join(' '),  [limit, offset]);
   }	
 }
