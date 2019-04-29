@@ -39,9 +39,7 @@
                     <span class="row px-1 mx-0 text-right"><strong><%= offset %> to <%= offset + limit %></strong> </span>
                 </div>
 
-                <% if (errorMessage) { %>
-                    <div class="col-9 mt-1 alert alert-danger"><%= errorMessage %></div>
-                <% } %>
+
               </div>  
             </div>
 
@@ -64,11 +62,14 @@
                 <div class="row mx-0">
                     <a class="nav-item text-dark" data-toggle="collapse" data-target="#advancedsearch" role="button" aria-expanded="false" aria-controls="collapseDownloadData">Advanced Search >></a>
                 </div>
+                <% if (errorMessage) { %>
+                    <div class="col-10 mt-1 alert alert-danger"><%= errorMessage %></div>
+                <% } %>
                 <div class="row mx-0 <% if (!vendorSelected && !searchManufacturer ) { %>collapse<% }%>"
                                         
                  id="advancedsearch">
                     <div class="row  mx-0"  >
-                      <div class="input-group">  
+                      <div class="input-group pr-1">  
                         <label class="col-12 col-md-5 text-dark" for="searchVendor">Select Vendor</label>
                         <select class="col-12 col-md-7 px-0 py-1 mb-1 w3-theme-d2 text-dark " id="searchVendor" name="vendorSelected" value="<%= vendorSelected %>">
                             <option value="" <%if (vendorSelected === "") {%>
@@ -92,13 +93,12 @@
                             %>
                         </select>
                       </div>
-                      <div class="input-group mb-1">  
-
-                       <label class="col-12 col-md-5 text-dark" for="manufacturerName">Search Manufacturers</label>
-                       <input type="text" class="col-12  col-md-7 form-control"  name="searchManufacturer" id="manufacturerName" aria-label="Manufacturer Name" value="<%= searchManufacturer %>" placeholder="Manufacturer">
+                      <div class="input-group pr-1 mb-1">  
+                           <label class="col-12 col-md-5 text-dark" for="manufacturerName">Search Manufacturers</label>
+                           <input type="text" class="col-12  col-md-7 form-control"  name="searchManufacturer" id="manufacturerName" aria-label="Manufacturer Name" value="<%= searchManufacturer %>" placeholder="Manufacturer">
+                      </div>
                     </div>
                 </div>
-
 
             </form>
 

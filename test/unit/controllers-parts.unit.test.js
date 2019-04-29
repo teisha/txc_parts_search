@@ -1,5 +1,4 @@
 'use strict';
-const partsController = require('../../controllers/parts');
 const PartService = require('../../services/partService');
 require('mysql2/node_modules/iconv-lite').encodingExists('foo');
 
@@ -24,20 +23,21 @@ const returnMatchingVal = {manufacturer_id: 2, vendor_id: 2, parts_inventory_id:
 		manufacturer_code:"AXE", etilize_mfg_id: 564564};		
 
 const mockPopulateVendors = jest.fn().mockReturnValue(true);
-partsController.populateVendors = mockPopulateVendors;
-
 
 
 PartService.fetchAll = jest.fn().mockImplementation( (limit, offset) => {
 	    console.log ("MOCK FETCH ALL");
         return Promise.resolve([[returnAllVal],{}]); 
 	});
-
-PartService.findMatching = jest.fn().mockImplementation( (limit, offset, searchValue, searchType, vendorSelected, searchManufacturer) => {
+const mockFetchMatching = jest.fn().mockImplementation( (limit, offset, searchValue, searchType, vendorSelected, searchManufacturer) => {
 		console.log ("MOCK FETCH MATCHING");
         return Promise.resolve([[returnMatchingVal],{}]);
 
 	});
+PartService.findMatching = mockFetchMatching;
+const partsController = require('../../controllers/parts');
+partsController.populateVendors = mockPopulateVendors;
+
 //PartService.prototype.findMatching = mockfindMatching;
 
 const mockResponse = () => {
@@ -72,6 +72,14 @@ const res = mockResponse();
 
 describe('Parts controller => MATCH search terms', () => { 
   beforeEach(() => {
+  	PartService.findMatching = jest.fn().mockImplementation( (limit, offset, searchValue, searchType, vendorSelected, searchManufacturer) => {
+		console.log ("MOCK FETCH MATCHING");
+        return Promise.resolve([[returnMatchingVal],{}]);
+	});
+	PartService.fetchAll = jest.fn().mockImplementation( (limit, offset) => {
+	    console.log ("MOCK FETCH ALL");
+        return Promise.resolve([[returnAllVal],{}]); 
+	});
   	req = mockRequest();
   	req.body.limit = 20;
 	req.body.offset = 0;
@@ -110,7 +118,7 @@ describe('Parts controller => MATCH search terms', () => {
     req.body.vendorSelected = 1;
     await partsController.searchParts(req, res, () => {}); 
     
-    expect(PartService.findMatching).toHaveBeenCalled();
+    expect(PartService.findMatching).not.toHaveBeenCalled();
     expect(PartService.fetchAll).not.toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(307);
     expect(res.redirect).toHaveBeenCalledWith('/list-parts');
@@ -147,7 +155,7 @@ describe('Parts controller => MATCH search terms', () => {
     req.body.vendorSelected = 1;
     await partsController.getNextParts(req, res, () => {}); 
     
-    expect(PartService.findMatching).toHaveBeenCalled();
+    expect(PartService.findMatching).not.toHaveBeenCalled();
     expect(PartService.fetchAll).not.toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(307);
     expect(res.redirect).toHaveBeenCalledWith('/list-parts');
@@ -185,7 +193,7 @@ describe('Parts controller => MATCH search terms', () => {
     req.body.vendorSelected = 1;
     await partsController.getPreviousParts(req, res, () => {}); 
     
-    expect(PartService.findMatching).toHaveBeenCalled();
+    expect(PartService.findMatching).not.toHaveBeenCalled();
     expect(PartService.fetchAll).not.toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(307);
     expect(res.redirect).toHaveBeenCalledWith('/list-parts');
@@ -193,7 +201,51 @@ describe('Parts controller => MATCH search terms', () => {
     expect(req.flashVal.get('error') ).toBe('Search term is required to use "Advanced Search" feature.');
   });
 
+
   afterAll(() => {
 	console.log("DONE");
   }) ;
 });  
+
+
+describe('Parts controller => MATCH search terms', () => { 
+  beforeEach(() => {
+
+	PartService.findMatching = jest.fn().mockImplementation( (limit, offset, searchValue, searchType, vendorSelected, searchManufacturer) => {
+		console.log ("MOCK FETCH MATCHING");
+        return Promise.resolve([[returnMatchingVal],{}]);
+	});
+	PartService.fetchAll = jest.fn().mockImplementation( (limit, offset) => {
+	    console.log ("MOCK FETCH ALL");
+        return Promise.resolve([[returnAllVal],{}]); 
+	});
+  	req = mockRequest();
+  	req.body.limit = 20;
+	req.body.offset = 0;
+	req.flash = jest.fn().mockImplementation((flashType, flashValue) => {
+   		req.flashVal.set(flashType, flashValue);
+   		console.log(req.flashVal);  
+   	});
+  });
+
+
+  test('searchAll calls fetchAll when vendorID populated', async () => {
+    req.body.searchType = 1;
+    req.body.searchParameter = "";
+    req.body.searchManufacturer = "";
+    req.body.vendorSelected = 1;
+    await partsController.getParts(req, res, () => {}); 
+
+    expect(PartService.findMatching).not.toHaveBeenCalled();
+    expect(PartService.fetchAll).toHaveBeenCalled();
+    expect(res.url).toEqual('part/part-list');
+    expect(res.params.path).toEqual('/parts');
+    expect(res.params.pageTitle).toEqual('All Parts');
+    expect(res.params.limit).toBe(20);
+    expect(res.params.offset).toBe(0);
+    expect(res.params.searchType).toBe("1");
+    expect(res.params.searchValue).toBe("");
+    expect(res.params.searchManufacturer).toBe("");
+    expect(res.params.vendorSelected).toBe("");
+  });
+});

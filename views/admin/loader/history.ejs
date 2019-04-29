@@ -14,17 +14,21 @@
                 <% if (params.loaderSummary.length > 0) { %>
                     <div class="container-fluid px-0">
                         <table class="table"> 
-                          <thead>
-                            <tr><th class="pl-3 font-weight-bold">Parameter ID</th>
+
+
+                        <% for (let param of params.loaderSummary) { %>
+                        <tr>
+
+                            <tr class="w3-theme-d1-black">
+                                <th class="pl-3 font-weight-bold">Parameter ID</th>
                                 <th class="font-weight-bold">Process<br>Start Date</th>
                                 <th class="font-weight-bold">Process<br>End Date</th>
                                 <th class="font-weight-bold">Load Status</th>
                                 <th class="font-weight-bold">Last Action</th>
                             </tr>
-                          </thead>
 
-                        <% for (let param of params.loaderSummary) { %>
-                            <tr><td class="pl-5"><%= param.log_id %></td>
+                            <tr class="w3-theme-d1-black">  
+                                <td class="pl-5 "><%= param.log_id %></td>
                                 <td><span><%= formatDate(param.process_start_date) %></span>
                                     <span><%= formatTime(param.process_start_date) %></span>
                                 </td>
@@ -37,6 +41,46 @@
                                 <td><%= param.log_status %></td>
                                 <td><%= param.log_action %></td>
                             </tr>
+                        </tr>
+
+
+
+                        <tr  class="col-12">
+                            <td class="px-1" colspan="5">
+                            <div class="col-12 px-0" id="vendor_history<%=param.log_id%>">
+
+                              <table class="table table-bordered">
+                                <thead>
+                                    <tr><th class="subtable">Vendor Name</th>
+                                        <th class="subtable">Load Start Time</th>
+                                        <th class="subtable">Load End Time</th>
+                                        <th class="subtable">Load Status</th>
+                                        <th class="subtable">Record Count</th>
+                                        <th class="subtable">Message</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for (let processDetail of params.loaderDetails.filter(det => det.log_id === param.log_id)) { %>
+                                        <tr>
+                                        <td><%= processDetail.vendor_name %></td>
+                                        <td>
+                                            <span><%= formatDate(processDetail.load_start_time) %></span>
+                                            <span><%= formatTime(processDetail.load_start_time) %></span>
+                                        </td>
+                                        <td>
+                                            <span><%= formatDate(processDetail.load_end_time) %></span>
+                                            <span><%= formatTime(processDetail.load_end_time) %></span>
+                                        </td>
+                                        <td><%= processDetail.load_status %></td>
+                                        <td><%= formatCount(processDetail.record_count) %></td>
+                                        <td><%= processDetail.message %></td>
+
+                                        </tr>
+                                    <%}%>
+                                </tbody>
+                              </table>
+                            </div></td>
+                        </tr>
                         <% } %>
                         </table>
                     </div>

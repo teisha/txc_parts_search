@@ -9,6 +9,7 @@ const router = express.Router();
 
 
 router.get('/vendors', validateLogin, vendorController.viewVendors);
+router.get('/history/:vendorId', validateLogin, vendorController.showVendorHistory);
 
 
 module.exports = router;

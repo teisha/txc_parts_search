@@ -1,1 +1,0 @@
-"use strict";const Vendor=require("../services/vendorService");exports.viewVendors=((e,o,r)=>{console.log("fetching vendors"),Vendor.fetchAllVendors().then(([e,r])=>{o.render("vendor/vendors-main",{params:e,pageTitle:"Vendor Information",path:"/vendors"})}).catch(e=>console.log(e))});

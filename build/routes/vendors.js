@@ -1,1 +1,0 @@
-"use strict";const path=require("path"),express=require("express"),vendorController=require("../controllers/vendors"),validateLogin=require("../middleware/validateAuthentication"),router=express.Router();router.get("/vendors",validateLogin,vendorController.viewVendors),module.exports=router;

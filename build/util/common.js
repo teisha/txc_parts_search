@@ -1,1 +1,0 @@
-module.exports={getSingleErrorMessage:function(e){return e=e.length>0?e[0]:null}};

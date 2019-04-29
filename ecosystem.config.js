@@ -28,7 +28,7 @@ module.exports = {
   	  MYSQL_USER:'txc_app_user',
   	  MYSQL_PASSWORD:'viewtxc8554957',
   	  MYSQL_SCHEMA:'txc_inventory',
-      SESSION_SECRET: ':f>9w?73Bu^DK5O*On_?SFX^mUSz?2'
+      SESSION_SECRET: 'f>9w?73Bu^DK5O*On_?SFX^mUSz?2'
     }
   }],
 

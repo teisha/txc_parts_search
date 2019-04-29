@@ -1,0 +1,60 @@
+<%- include('../includes/head.ejs') %>
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+        <%- include('../includes/functions.ejs') %>
+            <main>
+                <div class="col col-12 px-0">
+                    <div class="row w3-theme-d1">
+                        <a class="btn w3-theme-d1 my-2" href="/vendor/vendors"> << Back To Vendor Main Page</a>
+                    </div>
+                    <h4 class="text-center w3-theme-d1 pb-3 mb-0">Vendor Load History</h4>
+                </div>  
+                <% if (params.length > 0) { %>
+
+                            <div class="col-12 px-0" id="vendor_history">
+
+                              <table class="table table-bordered">
+                                <thead>
+                                    <tr><th class="font-weight-bold">Process Log Id </th> 
+                                    	<th class="font-weight-bold">Vendor Name</th>
+                                        <th class="font-weight-bold">Load Start Time</th>
+                                        <th class="font-weight-bold">Load End Time</th>
+                                        <th class="font-weight-bold">Load Status</th>
+                                        <th class="font-weight-bold">Record Count</th>
+                                        <th class="font-weight-bold">Message</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for (let processDetail of params) { %>
+                                      <tr>
+                                      	<td><%= processDetail.log_id %></td>
+                                        <td><%= processDetail.vendor_name %></td>
+                                        <td>
+                                            <span><%= formatDate(processDetail.load_start_time) %></span>
+                                            <span><%= formatTime(processDetail.load_start_time) %></span>
+                                        </td>
+                                        <td>
+                                            <span><%= formatDate(processDetail.load_end_time) %></span>
+                                            <span><%= formatTime(processDetail.load_end_time) %></span>
+                                        </td>
+                                        <td class="<% if (processDetail.load_status === "SUCCESS") {%>
+                                                  text-success font-weight-bold
+                                              <%} else if (processDetail.load_status === "FAILED") {%>
+                                                  text-danger font-weight-bold
+                                              <%}%> "><%= processDetail.load_status %></td>
+                                        <td><%= formatCount(processDetail.record_count) %></td>
+                                        <td><%= processDetail.message %></td>
+
+                                      </tr>
+                                    <%}%>
+                                </tbody>
+                              </table>
+                            </div>
+
+                <% } else { %>
+                    <h1>No History Found For Vendor!</h1>
+                <% } %>
+            </main>
+            <%- include('../includes/end.ejs') %>                            

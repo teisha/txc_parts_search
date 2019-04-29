@@ -41,13 +41,13 @@ module.exports = class HistoryService {
 
 
     static getLastLoadSummary() {
-    	const sqlString = " SELECT log_id, vendor_name, " +
+    	const sqlString = " SELECT log_id, vendor_name, load_start_time, " +
 			"      TIMESTAMPDIFF(MINUTE,load_start_time,load_end_time) AS duration, " +
 			"      load_status, record_count, message  " +
 			"    FROM import_history WHERE log_id = (SELECT log_id  " +
 			"                FROM process_log ORDER BY log_id DESC LIMIT 1)  " +
 			"    ORDER BY log_id DESC, vendor_id ";
-			console.log(sqlString);
+//			console.log(sqlString);
 		return db.execute (sqlString);
 	}
 

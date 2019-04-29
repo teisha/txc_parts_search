@@ -1,6 +1,7 @@
 dist
 tmp
 deploy
+build
 node_modules
 nodemon.json
 ecosystem.config.js

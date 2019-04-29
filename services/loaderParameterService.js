@@ -23,7 +23,7 @@ module.exports = class LoaderParameterService {
                     '  WHEN -1 THEN 9999999999 ' + 
                     '  ELSE upper_limit_price ' + 
                     '  END ';
-    console.log(sqlstring);                    
+//    console.log(sqlstring);                    
     return db.execute(sqlstring);
   } 
 }

@@ -8,7 +8,8 @@
                     <div class="container-fluid px-0"> 
                         <table class="table"> 
                           <thead>
-                            <tr><th class="font-weight-bold">Vendor ID</th>
+                            <tr><th></th>
+                                <th class="font-weight-bold">Vendor ID</th>
                                 <th class="font-weight-bold">Vendor Short Name</th>
                                 <th class="font-weight-bold">Vendor Name</th>
                                 <th class="font-weight-bold">Is ChannelOnline <br>Supplier?</th>
@@ -17,7 +18,13 @@
                           </thead>
                           <tbody>  
                         <% for (let param of params) { %>
-                            <tr <% if (param.is_active_toint == 0) { %>class="text-muted bg-light" <% } %>>    
+                            <tr <% if (param.is_active_toint == 0) { %>class="text-muted bg-light" <% } %>>    <td>
+                                  <div class="px2 w3-theme-l1 border">
+                                    <a class="button text-dark" href="/vendor/history/<%=param.vendor_id%>">
+                                         <span class="pl-2">Show Load</span><br>
+                                         <span class="pl-2"> History</span></a>
+                                  </div>
+                                </td>
                                 <td><%= param.vendor_id %></td>
                                 <td><%= param.vendor_short_name %></td>
                                 <td><%= param.vendor_name %>
@@ -33,7 +40,7 @@
                                 <td class="px-0"><button class="nav-item w3-theme-d1" type="button" data-toggle="collapse" data-target="#download<%=param.vendor_short_name %>" role="button" aria-expanded="false" aria-controls="collapseDownloadData">View Download Parameters</button>
                                 </td>
                             </tr>
-                            <tr class="col-12 <% if (param.is_active_toint == 0) { %>text-warning<% } %>"><td class="px-1" colspan="5">
+                            <tr class="col-12 <% if (param.is_active_toint == 0) { %>text-warning<% } %>"><td class="px-1" colspan="6">
                               <div class="col-12 collapse px-0" id="download<%=param.vendor_short_name %>">
                                 <div class="card card-body px-0 py-0">
                                     

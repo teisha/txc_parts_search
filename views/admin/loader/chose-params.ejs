@@ -30,7 +30,7 @@
                   <div class="col-10 px-0">
                     <% if (params.recordCounts.length > 0) { %>
                         <div class="container-fluid px-0">
-                            <table class="table">
+                            <table class="table table-bordered">
                               <h3 class="text-center text-dark w3-theme-d1 my-0">Parts Inventory Record Counts</h3> 
                               <thead>
                                 <tr><th class="pl-4 font-weight-bold">Vendor ID</th>
@@ -58,11 +58,12 @@
 
                     <% if (params.loadSummary.length > 0) { %>
                         <div class="container-fluid px-0">
-                            <table class="table"> 
+                            <table class="table table-bordered"> 
                               <h3 class="text-center text-dark w3-theme-d1 my-0">Last Load Summary</h3>
                               <thead>                             
                                 <tr><th class="pl-4 font-weight-bold">Log ID</th>
                                     <th class="font-weight-bold">Vendor Name</th>
+                                    <th class="font-weight-bold">Start Time</th>
                                     <th class="font-weight-bold">Duration</th>
                                     <th class="font-weight-bold">Load Status</th>
                                     <th class="font-weight-bold">Record Count</th>
@@ -73,8 +74,13 @@
                             <% for (let summaryRec of params.loadSummary) { %>
                                 <tr><td class="pl-5"><%= summaryRec.log_id %></td>
                                     <td><%= summaryRec.vendor_name %></td>
+                                    <td><%= formatDate(summaryRec.load_start_time) + ' ' + formatTime(summaryRec.load_start_time) %>
                                     <td><%= formatDuration(summaryRec.duration) %></td>
-                                    <td><%= summaryRec.load_status %></td>
+                                    <td class="<% if (summaryRec.load_status === "SUCCESS") {%>
+                                                  text-success font-weight-bold
+                                              <%} else if (summaryRec.load_status === "FAILED") {%>
+                                                  text-danger font-weight-bold
+                                              <%}%> "><%= summaryRec.load_status %></td>
                                     <td class="text-right"><%= formatCount(summaryRec.record_count) %></td>
                                     <td><%= summaryRec.message %></td>
                                 </tr>

@@ -158,4 +158,6 @@ gulp.task('deployProd',
 	gulp.series('zipProduction')
 	// rsync to move files to production: https://mikeeverhart.net/2016/01/deploy-code-to-remote-servers-with-gulp-js/
 	//run "npm ci" on production server to recreate node-modules
+	//secret not pulling from ecosystem.config.js - add it manually...
+	
 );

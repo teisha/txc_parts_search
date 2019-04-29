@@ -60,3 +60,7 @@
     font-size: 18px;
     background-color: #ff7200 !important;
 }
+
+.table thead tr th.subtable {
+  background-color: #ff9d4d !important;
+}

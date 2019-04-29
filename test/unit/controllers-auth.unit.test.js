@@ -14,7 +14,7 @@ const fakeDb = [
 	  user_password:'does not match'}
 ];
 User.findByUserName = jest.fn().mockImplementation( (name) => {
-	    let fakeUser = fakeDb.find(function(userrec) {  
+	  let fakeUser = fakeDb.find(function(userrec) {  
 	    	return userrec.username === name;
 		});
 	    console.log("MOCK - FIND USER: " + JSON.stringify(fakeUser) );

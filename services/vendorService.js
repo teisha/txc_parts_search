@@ -17,4 +17,15 @@ module.exports = class VendorService {
   static findById(id) {
     return db.execute('SELECT * FROM vendors WHERE vendor_id = ?', [id]);
   }
+
+
+
+    static getProcessHistoryDetailsByVendor(vendorId) {
+    console.log("GET LAST 50 process history for vendor: " + vendorId);
+    return db.execute('SELECT * ' +
+      ' FROM import_history ih ' +
+      ' WHERE vendor_id = ? ' +
+      ' ORDER BY log_id DESC ' + 
+      ' LIMIT 50 ', [vendorId]);
+  }
 }
