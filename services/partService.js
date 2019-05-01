@@ -4,26 +4,28 @@ const db = require('../util/database');
 module.exports = class PartService {
   static fetchAll(limit, offset) {
     console.log("Find All: " );
-    return db.execute('SELECT  pi.manufacturer_id, pi.vendor_id, parts_inventory_id, products_model, part_number, '+ 
+    return db.execute('SELECT  pi.manufacturer_id, pi.vendor_id, pi.parts_inventory_id, products_model, pi.part_number, '+ 
         ' vendor_sku, quantity, cost, weight, part_name, part_description, condition_indicator, ' + 
         ' msrp, listed_price, etilize_id, date_loaded, vendor_short_name, vendor_name, ' + 
-        ' is_channelonline_compatible, manufacturer_name, manufacturer_code, etilize_mfg_id '+ 
+        ' is_channelonline_compatible, manufacturer_name, manufacturer_code, etilize_mfg_id, re.parts_inventory_id AS export_part_id'+ 
         ' FROM parts_inventory pi  ' +
                       ' INNER JOIN vendors v  ON pi.vendor_id = v.vendor_id  ' +
-                      ' INNER JOIN manufacturers m  ON pi.manufacturer_id = m.manufacturer_id ' +                      
+                      ' INNER JOIN manufacturers m  ON pi.manufacturer_id = m.manufacturer_id ' +    
+                      ' LEFT OUTER JOIN  b2b_records_exported re ON pi.parts_inventory_id = re.parts_inventory_id ' +                  
                       ' ORDER BY pi.vendor_id, vendor_sku LIMIT ? OFFSET ?',
             [limit, offset]);
   }
 
   static findById(id) {
-    return db.execute('SELECT  pi.manufacturer_id, pi.vendor_id, parts_inventory_id, products_model, part_number, '+ 
+    return db.execute('SELECT  pi.manufacturer_id, pi.vendor_id, pi.parts_inventory_id, products_model, pi.part_number, '+ 
         ' vendor_sku, quantity, cost, weight, part_name, part_description, condition_indicator, ' + 
         ' msrp, listed_price, etilize_id, date_loaded, vendor_short_name, vendor_name, ' + 
-        ' is_channelonline_compatible, manufacturer_name, manufacturer_code, etilize_mfg_id '+ 
+        ' is_channelonline_compatible, manufacturer_name, manufacturer_code, etilize_mfg_id, re.parts_inventory_id AS export_part_id '+ 
         ' FROM parts_inventory pi  ' +
                       ' INNER JOIN vendors v  ON pi.vendor_id = v.vendor_id  ' +
-                      ' INNER JOIN manufacturers m  ON pi.manufacturer_id = m.manufacturer_id ' +                      
-                      ' WHERE parts_inventory_id = ?', [id]);
+                      ' INNER JOIN manufacturers m  ON pi.manufacturer_id = m.manufacturer_id ' +        
+                      ' LEFT OUTER JOIN  b2b_records_exported re ON pi.parts_inventory_id = re.parts_inventory_id ' +
+                      ' WHERE pi.parts_inventory_id = ?', [id]);
   }
 
 
@@ -45,17 +47,18 @@ module.exports = class PartService {
     }
     console.log('SEARCHING: ' + searchString + ' / ' + productsModelSearch);
 
-    let sqlString = ['SELECT  pi.manufacturer_id, pi.vendor_id, parts_inventory_id, products_model, part_number, '+ 
+    let sqlString = ['SELECT  pi.manufacturer_id, pi.vendor_id, pi.parts_inventory_id, products_model, pi.part_number, '+ 
         ' vendor_sku, quantity, cost, weight, part_name, part_description, condition_indicator, ' + 
         ' msrp, listed_price, etilize_id, date_loaded, vendor_short_name, vendor_name, ' + 
-        ' is_channelonline_compatible, manufacturer_name, manufacturer_code, etilize_mfg_id '+ 
+        ' is_channelonline_compatible, manufacturer_name, manufacturer_code, etilize_mfg_id, re.parts_inventory_id AS export_part_id  '+ 
         ' FROM parts_inventory pi  ' +
                       ' INNER JOIN vendors v  ON pi.vendor_id = v.vendor_id  ' +
-                      ' INNER JOIN manufacturers m  ON pi.manufacturer_id = m.manufacturer_id ' +                      
-                      ' WHERE vendor_sku ' + operation + '  \'' + searchString + '\' OR '+
+                      ' INNER JOIN manufacturers m  ON pi.manufacturer_id = m.manufacturer_id ' + 
+                      ' LEFT OUTER JOIN  b2b_records_exported re ON pi.parts_inventory_id = re.parts_inventory_id ' +                       
+                      ' WHERE ( vendor_sku ' + operation + '  \'' + searchString + '\' OR '+
                       '       products_model ' + operation + '  \'' + productsModelSearch + '\' OR '+
-                      '       part_number ' + operation + '  \'' + searchString + '\' OR '+
-                      '       part_name ' + operation + '  \'' + searchString + '\' '];
+                      '       pi.part_number ' + operation + '  \'' + searchString + '\' OR '+
+                      '       part_name ' + operation + '  \'' + searchString + '\' ) '];
       if (vendorSelected) {
         sqlString.push(' AND v.vendor_id = ' + vendorSelected);
       }
@@ -64,7 +67,7 @@ module.exports = class PartService {
       }
                                     
       sqlString.push(' ORDER BY pi.vendor_id, vendor_sku LIMIT ? OFFSET ?');
-//      console.log( sqlString);
+ //     console.log( sqlString);
     return db.execute (sqlString.join(' '),  [limit, offset]);
-  }	
+  }
 }

@@ -21,14 +21,6 @@ module.exports = class HistoryService {
 			' ORDER BY p.log_id, vendor_id ');
 	}
 
-	static getProcessHistoryDetailsByVendor(vendorId) {
-		console.log("GET LAST 20 process history for vendor: " + vendorId);
-		return db.execute('SELECT * ' +
-			' FROM JOIN import_history ih ' +
-			' WHERE vendor_id = ? ' +
-			' ORDER BY p.log_id DESC ' + 
-			' LIMIT 20 ', [vendorId]);
-	}
 
 	static getRecordSummary() {
 		console.log("GET process data counts");

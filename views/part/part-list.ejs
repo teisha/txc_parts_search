@@ -15,10 +15,12 @@
                 <table  class="table col-12 table-striped"> 
                   <thead>  
                     <tr><th>Details</th>
+                        <th>B2B Record Sent</th>
+                        <th>Vendor</th>
                         <th>Part Number</th>
                         <th>Manufacturer</th>
-                        <th>Vendor</th>
                         <th>Vendor Sku</th>
+                        <th>Condition</th>
                         <th>Quantity</th>
                         <th>Cost</th>
                         <th>Listed Price</th>
@@ -32,10 +34,12 @@
                   <tbody>
                     <% for (let part of parts) { %>
                         <tr><td><a href="/part-detail/<%= part.parts_inventory_id %>"><img src="/images/compare.png" /></a></td>
+                            <td><% if (part.export_part_id) { %><img src="/images/b2b-black-24.ico" width="32" height="32" /><%}%></td>
+                            <td><%= part.vendor_name %></td>
                             <td><%= part.part_number %></td>
                             <td><%= part.manufacturer_name %></td>
-                            <td><%= part.vendor_name %></td>
                             <td><%= part.vendor_sku %></td>
+                            <td><% if (part.condition_indicator === 1) { %>NEW<%} else {%>REF<%}%></td>
                             <td><%= part.quantity %></td>
                             <td><%= part.cost %></td>
                             <td><%= part.listed_price %></td>
